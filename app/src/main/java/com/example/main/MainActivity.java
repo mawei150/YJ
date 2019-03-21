@@ -7,7 +7,7 @@ import android.os.Bundle;
  * @author MW
  * @date 2019/3/19
  * <p>
- * 描述：主页面
+ * 描述：暂时作为主页面
  */
 
 public class MainActivity extends Activity {
