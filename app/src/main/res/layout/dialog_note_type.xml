@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_select_photo_ppwRoot"
+    android:layout_width="match_parent"
+    android:layout_height="270dp"
+    android:layout_gravity="bottom"
+    android:background="#E0E0E0">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="文字"
+            android:textColor="#2C7ADC"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#D0D1D3" />
+
+        <TextView
+            android:id="@+id/tv_img"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="图片"
+            android:textColor="#2C7ADC"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#D0D1D3" />
+
+        <TextView
+            android:id="@+id/tv_video"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="视频"
+            android:textColor="#2C7ADC"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#D0D1D3" />
+
+        <TextView
+            android:id="@+id/tv_sound_record"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="录音"
+            android:textColor="#2C7ADC"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvSelectPhotoCancel"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#2C7ADC"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

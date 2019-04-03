@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,12 +15,18 @@ import android.widget.TextView;
 import com.example.bean.BeanUserBase;
 import com.example.main.MainActivity;
 import com.example.main.R;
+import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -106,8 +113,8 @@ public class LoginActivity extends Activity {
             public void done(BeanUserBase beanUserBase, BmobException e) {
                 if (e == null) {
                     ToastUtil.showToast(getApplicationContext(), "登录成功");
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    //GlobalVariables.setUsername(account);
+                    checkPersonalInformation();
                 } else {
                     ToastUtil.showToast(getApplicationContext(), "登录失败" + e.toString());
                 }
@@ -115,6 +122,33 @@ public class LoginActivity extends Activity {
         });
 
     }
+
+    //查个人信息
+    private void checkPersonalInformation() {
+        final String account = mEdUserName.getText().toString().trim();//用户名
+        BmobQuery<BeanUserBase> userBmobQuery = new BmobQuery<>();
+        userBmobQuery.addWhereEqualTo("username", account);
+        userBmobQuery.setLimit(1).findObjects(new FindListener<BeanUserBase>() {
+            @Override
+            public void done(List<BeanUserBase> object, BmobException e) {
+                if (e == null) {
+                    //ToastUtil.showToast(getApplicationContext(), object.get(0).getObjectId() + "");
+                     GlobalVariables.setUsername(account);//存用户名
+                     GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
+                     //跳主页面
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+
+                } else {
+
+                    ToastUtil.showToast(getApplicationContext(), "失败" + e.getMessage());
+
+                }
+            }
+        });
+
+    }
+
 
     protected void onDestroy() {
         super.onDestroy();

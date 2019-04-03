@@ -67,7 +67,6 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -267,4 +266,40 @@ public class RegisterActivity extends Activity {
         return false;
     }
 
+
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("11111","onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("11111","onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("11111","onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("11111","onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("11111","onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("11111","onDestroy");
+    }*/
 }

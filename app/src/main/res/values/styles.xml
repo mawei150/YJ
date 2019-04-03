@@ -14,4 +14,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
+                <item name="android:windowEnterAnimation">@drawable/actionsheet_dialog_in</item>
+                <item name="android:windowExitAnimation">@drawable/actionsheet_dialog_out</item>
+
+            </style>
+
+
+
 </resources>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toos="http://schemas.android.com/tools"
+    android:id="@+id/fl_message"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
+
+
+    <FrameLayout
+        android:id="@+id/news_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_home_type"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/layer_message_home_bg"
+            android:gravity="center"
+            android:text="文字"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_message_news_content"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginLeft="70dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color1"
+            android:textSize="14sp"
+            toos:text="笔记标题很长很长很长很长很长很长" />
+
+        <TextView
+            android:id="@+id/tv_home_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:textSize="10sp"
+            toos:text="2018-07-24 15:24:40" />
+
+        <TextView
+            android:id="@+id/tv_home_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="70dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="暂无消息"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/color4"
+            android:textSize="13sp" />
+
+
+
+    </FrameLayout>
+
+</LinearLayout>

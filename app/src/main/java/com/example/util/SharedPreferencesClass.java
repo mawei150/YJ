@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  * @author MW
  * @date 2019/3/21
  * <p>
- * 描述：SharedPreferences的封装  暂时我没用到
+ * 描述：SharedPreferences的封装
  */
 
 public class SharedPreferencesClass {

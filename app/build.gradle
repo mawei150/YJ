@@ -44,4 +44,17 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.4.0'//CDN文件服务使用okhttp相关包进行文件的上传和下载（必填）
     implementation 'com.squareup.okio:okio:1.4.0'
     implementation 'cn.bmob.android:http-legacy:1.0'//兼容系统6.0
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //引入图片选择器
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+    //引入eventbus
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.android.support:design:27.1.1'
+
+    //recycleView 轮子
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
 }

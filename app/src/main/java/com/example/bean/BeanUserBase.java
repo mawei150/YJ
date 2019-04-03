@@ -1,9 +1,9 @@
 package com.example.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.File;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * @author MW
@@ -38,6 +38,8 @@ public class BeanUserBase extends BmobUser  {
     }*/
     private  boolean sex;//性别
     private  String  desc;//简介
+    private  BmobFile image;//个人头像
+    private  String  headimage;
 
     public boolean isSex() {
         return sex;
@@ -53,5 +55,21 @@ public class BeanUserBase extends BmobUser  {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public BmobFile getImage() {
+        return image;
+    }
+
+    public void setImage(BmobFile image) {
+        this.image = image;
+    }
+
+    public String getHeadimage() {
+        return headimage;
+    }
+
+    public void setHeadimage(String headimage) {
+        this.headimage = headimage;
     }
 }
