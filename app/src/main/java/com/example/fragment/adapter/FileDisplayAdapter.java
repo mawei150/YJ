@@ -8,10 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.main.R;
 import com.squareup.picasso.Picasso;
-
-
 import java.util.List;
-
 import cn.bmob.v3.datatype.BmobFile;
 
 

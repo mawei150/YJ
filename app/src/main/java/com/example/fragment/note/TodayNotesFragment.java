@@ -3,38 +3,47 @@ package com.example.fragment.note;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.bean.BeanUserBase;
 import com.example.bean.note;
 import com.example.fragment.adapter.NoteCategoryDiapplayAdapter;
 import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
 import com.example.util.Constant;
-import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
+import com.example.util.advanced.LongPressPopView;
 import com.example.util.advanced.NoteTypeDialog;
+import com.example.util.advanced.TipsDialog;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author MW
@@ -43,9 +52,9 @@ import cn.bmob.v3.listener.FindListener;
  * 描述：添加笔记
  */
 
-public class UserWriteNotesFragment extends Fragment {
+public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnItemLongClickListener {
 
-    public static final String TAG = "UserWriteNotesFragment";
+    public static final String TAG = "TodayNotesFragment";
 
     @BindView(R.id.fb_add)
     FloatingActionButton mFbAdd;
@@ -58,15 +67,15 @@ public class UserWriteNotesFragment extends Fragment {
     TextView mTvIncludeHeaderTitle;
 
     private int mAddNoteType;//1.文字 2.图片  3.视频   4.录音
-    private NoteCategoryDiapplayAdapter  mAdapter;
+    private NoteCategoryDiapplayAdapter mAdapter;
 
 
-    public UserWriteNotesFragment() {
+    public TodayNotesFragment() {
         // Required empty public constructor
     }
 
-    public static UserWriteNotesFragment newInstance() {
-        UserWriteNotesFragment fragment = new UserWriteNotesFragment();
+    public static TodayNotesFragment newInstance() {
+        TodayNotesFragment fragment = new TodayNotesFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -92,7 +101,7 @@ public class UserWriteNotesFragment extends Fragment {
     private void initView() {
         mTvIncludeHeaderTitle.setText("今日笔记");
         mRefresh.setColorSchemeColors(getResources().getColor(R.color.mainColor));
-        mRvList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        mRvList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -100,8 +109,27 @@ public class UserWriteNotesFragment extends Fragment {
                 mRefresh.setRefreshing(false);
             }
         });
-        mAdapter=new NoteCategoryDiapplayAdapter(R.layout.item_user_note,null);
+        mAdapter = new NoteCategoryDiapplayAdapter(R.layout.item_user_note, null);
         mRvList.setAdapter(mAdapter);
+
+        //点击事件
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                note mNote=mAdapter.getItem(position);
+                if(mNote==null){
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.setClass(getContext(), UserCenterActivity.class);//换一种写法
+                intent.putExtra(note.class.getCanonicalName(),mNote);
+                intent.putExtra(Constant.FRAGMENT_ID, NoteDetailFragment.TAG);
+                startActivity(intent);
+            }
+        });
+
+        //长按和编辑
+        mAdapter.setOnItemLongClickListener(this);
 
     }
 
@@ -109,44 +137,42 @@ public class UserWriteNotesFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
-        SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+        DisplayList();
+    }
 
-        String curDate = s.format(c.getTime());  //当前日期
-        BmobQuery<note> eq1 = new BmobQuery<note>();
+    private void DisplayList() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        Date beginOfDate = cal.getTime();
+        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //String time=formatter.format(cal.getTime());
+        BmobDate bmobCreatedAtDate = new BmobDate(cal.getTime());////0点0分0点
 
-        eq1.addWhereLessThanOrEqualTo("updatedAt", "yyyy-MM-dd 00:00:00");//
+        /*SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        String maxCurDate = formatter1.format(calendar.getTime());//23点59分59秒*/
 
-
-
-//--and条件2
-        BmobQuery<note> eq2 = new BmobQuery<note>();
-        eq2.addWhereGreaterThanOrEqualTo("author", GlobalVariables.getUserObjectId());//
-
-
-        List<BmobQuery<note>> andQuerys = new ArrayList<BmobQuery<note>>();
-        andQuerys.add(eq1);
-        andQuerys.add(eq2);
-
-//查询符合整个and条件的人
-        BmobQuery<note> query = new BmobQuery<note>();
-        query.and(andQuerys);
-        query.findObjects(new FindListener<note>() {
+        BmobQuery<note> categoryBmobQuery = new BmobQuery<>();
+        categoryBmobQuery.addWhereNotEqualTo("author", BeanUserBase.class);
+        categoryBmobQuery.addWhereGreaterThan("createdAt", bmobCreatedAtDate);
+        categoryBmobQuery.findObjects(new FindListener<note>() {
             @Override
             public void done(List<note> object, BmobException e) {
                 if (e == null) {
-                    //toast("查询年龄6-29岁之间，姓名以'y'或者'e'结尾的人个数："+object.size());
                     ToastUtil.showToast(getContext(), "查询数量" + object.size());
-
                     mAdapter.setNewData(object);
 
                 } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                    Log.e("BMOB", e.toString());
+                    ToastUtil.showToast(getContext(), "失败" + e.getErrorCode() + e.getMessage());
                 }
             }
         });
-
-
     }
 
     @OnClick({R.id.fb_add})
@@ -157,9 +183,7 @@ public class UserWriteNotesFragment extends Fragment {
                 noteTypeDialog.setOnteTypeClickLister(new NoteTypeDialog.NoteTypeDialogClickLister() {
                     @Override
                     public void ImgOnClickLister() {
-                        //ToastUtil.showToast(getContext(),"我是图片按钮");
                         noteTypeDialog.dismiss();
-                        //ToastUtil.showToast(getContext(),"我是文字按钮");
                         Intent intent = new Intent(getContext(), UserCenterActivity.class);
                         intent.putExtra(Constant.FRAGMENT_ID, AddNoteFragment.TAG);
                         intent.putExtra(UserCenterActivity.NOTE_TYPE, 2);
@@ -169,7 +193,6 @@ public class UserWriteNotesFragment extends Fragment {
                     @Override
                     public void WordOnClickLister() {
                         noteTypeDialog.dismiss();
-                        //ToastUtil.showToast(getContext(),"我是文字按钮");
                         Intent intent = new Intent(getContext(), UserCenterActivity.class);
                         intent.putExtra(Constant.FRAGMENT_ID, AddNoteFragment.TAG);
                         intent.putExtra(UserCenterActivity.NOTE_TYPE, 1);
@@ -210,5 +233,48 @@ public class UserWriteNotesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    //长按点击事件
+    @Override
+    public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
+        final LongPressPopView pressPopView = new LongPressPopView(getContext());
+        pressPopView.setLongPressOnClickLister(new LongPressPopView.LongPressOnClickLister() {
+            @Override
+            public void cancel() {
+                pressPopView.dismiss();
+            }
+
+            @Override
+            public void Edit() {
+                ToastUtil.showToast(getContext(), "我是弹出框啊");
+            }
+
+            @Override
+            public void Delete() {
+                //ToastUtil.showToast(getContext(),"我是删除框啊");
+                note category = new note();
+                category.delete(mAdapter.getItem(position).getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            ToastUtil.showToast(getContext(), "删除成功");
+                            DisplayList();
+                        } else {
+                            ToastUtil.showToast(getContext(), "删除失败" + e.getErrorCode() + e.getMessage());
+                        }
+                    }
+                });
+
+            }
+        });
+        Animation show = AnimationUtils.loadAnimation(getContext(), R.anim.ppw_select_photo_slide_bottom);
+        show.setFillAfter(true);
+        pressPopView.getmTvDelete().startAnimation(show);
+        pressPopView.getmTvCancel().startAnimation(show);
+        pressPopView.getmTvEdit().startAnimation(show);//仅仅是动画
+        pressPopView.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        return true;
     }
 }

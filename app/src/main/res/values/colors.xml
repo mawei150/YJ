@@ -5,11 +5,14 @@
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
     <color name="mainColor">#04AD84</color>
+    <color name="red">#FFFF0000</color>
+    <color name="warning_stroke_color">#F8BB86</color>
 
 
     <color name="color1">#333333</color>
     <color name="color2">#E0E0E0</color>
     <color name="color3">#E5E5E5</color>
     <color name="color4">#666666</color>
+    <color name="color5">#E5E5E5</color>
 
 </resources>

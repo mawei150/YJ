@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
-import com.example.fragment.note.UserWriteNotesFragment;
+import com.example.fragment.note.TodayNotesFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
 import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
@@ -109,7 +109,7 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.ll_take_notes://写笔记
                 intent = new Intent(getContext(), UserCenterActivity.class);
-                intent.putExtra(Constant.FRAGMENT_ID, UserWriteNotesFragment.TAG);
+                intent.putExtra(Constant.FRAGMENT_ID, TodayNotesFragment.TAG);
                 startActivity(intent);
                 break;
             default:

@@ -17,7 +17,7 @@ import java.util.List;
  * 描述： 类别展示
  */
 
-public class NoteCategoryDiapplayAdapter  extends BaseQuickAdapter<note, BaseViewHolder> {
+public class NoteCategoryDiapplayAdapter extends BaseQuickAdapter<note, BaseViewHolder> {
     public NoteCategoryDiapplayAdapter(int layoutResId, @Nullable List<note> data) {
         super(layoutResId, data);
     }
@@ -25,9 +25,10 @@ public class NoteCategoryDiapplayAdapter  extends BaseQuickAdapter<note, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, note item) {
 
-        helper.setText(R.id.tv_message_news_content, item.getNoteTitle());
+        helper.setText(R.id.tv_home_date, item.getCreatedAt() + "");
+        helper.setText(R.id.tv_message_news_content, "标题: " + item.getNoteTitle());
         if (TextUtils.isEmpty(item.getNoteWords())) {
-            helper.setText(R.id.tv_home_content, "暂无消息");
+            helper.setText(R.id.tv_home_content, "暂无内容");
         } else {
             helper.setText(R.id.tv_home_content, item.getNoteWords());
         }
@@ -36,15 +37,15 @@ public class NoteCategoryDiapplayAdapter  extends BaseQuickAdapter<note, BaseVie
         if (item.getNoteType() == 1) {
             helper.setText(R.id.tv_home_type, "文字");
             helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_home_bg);
-        } else if(item.getNoteType()==2) {
+        } else if (item.getNoteType() == 2) {
            /* helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_exam_bg);
             helper.setText(R.id.tv_home_type, "考");*/
             helper.setText(R.id.tv_home_type, "图片");
             helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_home_bg);
-        }else  if(item.getNoteType()==3){
+        } else if (item.getNoteType() == 3) {
             helper.setText(R.id.tv_home_type, "视频");
             helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_home_bg);
-        }else{
+        } else {
             helper.setText(R.id.tv_home_type, "音频");
             helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_home_bg);
         }

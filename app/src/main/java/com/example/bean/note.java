@@ -1,8 +1,7 @@
 package com.example.bean;
 
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import cn.bmob.v3.BmobObject;
@@ -15,7 +14,7 @@ import cn.bmob.v3.datatype.BmobFile;
  * 描述： 笔记
  */
 
-public class note extends BmobObject {
+public class note extends BmobObject   implements Serializable {
 
     private  String  noteTitle;//笔记标题
     private  String  noteWords;//文字笔记
@@ -73,4 +72,6 @@ public class note extends BmobObject {
     public void setBmobFileList(List<BmobFile> bmobFileList) {
         this.bmobFileList = bmobFileList;
     }
+
+
 }
