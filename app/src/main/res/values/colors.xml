@@ -7,6 +7,8 @@
     <color name="mainColor">#04AD84</color>
     <color name="red">#FFFF0000</color>
     <color name="warning_stroke_color">#F8BB86</color>
+    <color name="page_main_color">#FAFAFA</color>
+    <color name="font_color">#333333</color>
 
 
     <color name="color1">#333333</color>

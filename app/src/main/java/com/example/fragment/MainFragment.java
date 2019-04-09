@@ -14,7 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
+import com.example.fragment.allnote.AllNoteActivity;
 import com.example.fragment.note.TodayNotesFragment;
+import com.example.fragment.shownote.ShowNoteActivity;
+import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
 import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
@@ -54,6 +57,11 @@ public class MainFragment extends Fragment {
     TextView mTvNickName;
     @BindView(R.id.ll_take_notes)
     LinearLayout mLlTakeNotes;
+    @BindView(R.id.ll_all_note)
+    LinearLayout mLlAllNote;
+    @BindView(R.id.ll_de_gemeenschap)
+    LinearLayout mLlDeGemeenschap;
+
 
     private DrawerLayout drawer_layout;
 
@@ -97,7 +105,7 @@ public class MainFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_head, R.id.cl_personal_data,R.id.ll_take_notes})
+    @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes,R.id.ll_all_note,R.id.ll_de_gemeenschap})
     public void onClickView(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -112,6 +120,14 @@ public class MainFragment extends Fragment {
                 intent.putExtra(Constant.FRAGMENT_ID, TodayNotesFragment.TAG);
                 startActivity(intent);
                 break;
+            case R.id.ll_all_note://所有笔记
+                intent = new Intent(getContext(), AllNoteActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_de_gemeenschap://社区
+                 intent=new Intent(getContext(), ShowNoteActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, ShowNoteFragment.TAG);
+                 startActivity(intent);
             default:
                 break;
         }

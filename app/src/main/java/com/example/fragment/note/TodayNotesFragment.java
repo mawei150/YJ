@@ -25,6 +25,7 @@ import com.example.fragment.adapter.NoteCategoryDiapplayAdapter;
 import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
 import com.example.util.Constant;
+import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
 import com.example.util.advanced.LongPressPopView;
 import com.example.util.advanced.NoteTypeDialog;
@@ -105,7 +106,7 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ToastUtil.showToast(getContext(), "我是上拉刷新");
+                DisplayList();
                 mRefresh.setRefreshing(false);
             }
         });
@@ -149,22 +150,15 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
         //String time=formatter.format(cal.getTime());
         BmobDate bmobCreatedAtDate = new BmobDate(cal.getTime());////0点0分0点
 
-        /*SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 999);
-        String maxCurDate = formatter1.format(calendar.getTime());//23点59分59秒*/
 
         BmobQuery<note> categoryBmobQuery = new BmobQuery<>();
-        categoryBmobQuery.addWhereNotEqualTo("author", BeanUserBase.class);
+        categoryBmobQuery.addWhereEqualTo("author", GlobalVariables.getUserObjectId());
         categoryBmobQuery.addWhereGreaterThan("createdAt", bmobCreatedAtDate);
         categoryBmobQuery.findObjects(new FindListener<note>() {
             @Override
             public void done(List<note> object, BmobException e) {
                 if (e == null) {
-                    ToastUtil.showToast(getContext(), "查询数量" + object.size());
+                    //ToastUtil.showToast(getContext(), "查询数量" + object.size());
                     mAdapter.setNewData(object);
 
                 } else {
@@ -175,7 +169,7 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
         });
     }
 
-    @OnClick({R.id.fb_add})
+    @OnClick({R.id.fb_add,R.id.li_includeHeaderLeft})
     public void onClickView(View view) {
         switch (view.getId()) {
             case R.id.fb_add:
@@ -223,6 +217,9 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
                 });
                 noteTypeDialog.show();
                 break;
+            case R.id.li_includeHeaderLeft:
+                getActivity().onBackPressed();
+                break;
             default:
                 break;
         }
@@ -266,7 +263,6 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
                         }
                     }
                 });
-
             }
         });
         Animation show = AnimationUtils.loadAnimation(getContext(), R.anim.ppw_select_photo_slide_bottom);

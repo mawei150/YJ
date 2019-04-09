@@ -10,11 +10,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <!--请求访问使用照相设备-->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
-
-
 
     <application
         android:name="com.example.application.BaseApplication"
@@ -24,12 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->>
-
-        <activity android:name="com.example.fragment.usercenter.UserCenterActivity"
-            android:exported="true">
-
-        </activity>
+        <activity android:name="com.example.fragment.shownote.ShowNoteActivity"></activity>
+        <activity android:name="com.example.fragment.allnote.AllNoteActivity" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
+        <activity
+            android:name="com.example.fragment.usercenter.UserCenterActivity"
+            android:exported="true" />
         <activity android:name="com.example.login.RegisterActivity" />
         <activity android:name="com.example.login.LoginActivity">
             <intent-filter>

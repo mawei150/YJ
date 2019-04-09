@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_mooc_discuss"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/white"
+    app:cardCornerRadius="5dp"
+    app:elevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <com.example.util.advanced.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/defult_avatar" />
+
+            <TextView
+                android:id="@+id/tv_displayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_profile"
+                android:textColor="@color/color1"
+                android:textSize="16sp"
+                tools:text="马威" />
+
+            <TextView
+                android:id="@+id/tv_dateCrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/tv_displayName"
+                android:layout_toRightOf="@+id/iv_profile"
+                android:layout_marginTop="2dp"
+                android:minWidth="120dp"
+                android:textSize="12sp"
+                android:textColor="@color/color1"
+                tools:text="2018-04-29 22:39:16" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/color1"
+            tools:text="笔记的内容" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+
+
+            <ImageView
+                android:id="@+id/iv_trash"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:gravity="bottom"
+                android:minWidth="30dp"
+                android:src="@drawable/ic_svg_trash"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/fl_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginRight="2dp"
+                    android:src="@drawable/ic_svg_comment" />
+
+                <TextView
+                    android:id="@+id/tv_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:gravity="top"
+                    android:textSize="13sp"
+                    tools:text="10" />
+
+            </LinearLayout>
+
+
+           <!-- <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/ic_svg_like" />
+
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:textSize="13sp"
+                tools:text="22" />-->
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+

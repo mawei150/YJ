@@ -14,16 +14,16 @@ import cn.bmob.v3.datatype.BmobFile;
  * 描述： 笔记
  */
 
-public class note extends BmobObject   implements Serializable {
+public class note extends BmobObject implements Serializable {
 
-    private  String  noteTitle;//笔记标题
-    private  String  noteWords;//文字笔记
-    private  int     noteType;//笔记类型
-    private  List notePicture;//图片笔记
+    private String noteTitle;//笔记标题
+    private String noteWords;//文字笔记
+    private int noteType;//笔记类型
+    private List<BmobFile> notePicture;//图片笔记
 
-    private  BeanUserBase author;
+    private BeanUserBase author;
 
-    private  List<BmobFile>bmobFileList;
+    private List<BmobFile> bmobFileList;
 
     public String getNoteTitle() {
         return noteTitle;
@@ -57,11 +57,19 @@ public class note extends BmobObject   implements Serializable {
         this.author = author;
     }
 
-    public List getNotePicture() {
+    /*public List getNotePicture() {
         return notePicture;
     }
 
     public void setNotePicture(List notePicture) {
+        this.notePicture = notePicture;
+    }*/
+
+    public List<BmobFile> getNotePicture() {
+        return notePicture;
+    }
+
+    public void setNotePicture(List<BmobFile> notePicture) {
         this.notePicture = notePicture;
     }
 

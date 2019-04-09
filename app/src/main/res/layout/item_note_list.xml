@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toos="http://schemas.android.com/tools"
+    android:background="@color/white"
+    app:cardElevation="2dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="5dp">
+
+    <TextView
+        android:id="@+id/tv_message_news_content"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color1"
+        android:textSize="15sp"
+        toos:text="笔记标题很长很长很长很长很长很长" />
+
+    <TextView
+        android:id="@+id/tv_home_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="7dp"
+        android:textSize="12sp"
+        android:layout_marginRight="10dp"
+        toos:text="2018-07-24 15:24:40" />
+
+    <TextView
+        android:id="@+id/tv_home_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="暂无消息"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/color4"
+        android:textSize="14sp" />
+
+
+</android.support.v7.widget.CardView>

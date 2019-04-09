@@ -1,4 +1,4 @@
-package com.example.fragment.note;
+package com.example.fragment.shownote.addshow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,18 +11,19 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.bean.BeanUserBase;
+import com.example.bean.ShowNote;
 import com.example.bean.note;
 import com.example.fragment.adapter.FileDisplayAdapter;
-import com.example.fragment.adapter.MyFileDisplayAdapter;
-import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
 import com.example.util.ToastUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -48,54 +49,57 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * @author MW
- * @date 2019/4/1
+ * @date 2019/4/9
  * <p>
- * 描述： 上传文件资源
+ * 描述： 添加个人  分享
  */
 
-public class AddNoteFragment extends Fragment {
 
-    public static final String TAG = "AddNoteFragment";
+public class AddShowNoteFragment extends Fragment {
+
+    public static final String TAG = "AddShowNoteFragment";
 
     @BindView(R.id.tv_includeHeaderTitle)
     TextView mTvIncludeHeaderTitle;
     @BindView(R.id.li_includeHeaderLeft)
     LinearLayout mLiIncludeHeaderLeft;
-    @BindView(R.id.et_title)
-    EditText mEtTitle;
-    @BindView(R.id.et_content)
-    EditText mEtContent;
+    @BindView(R.id.li_includeHeaderRight)
+    LinearLayout mLiIncludeHeaderRight;
     @BindView(R.id.tv_limit_words)
     TextView mTvLimitWords;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.tv_state)
+    TextView mTvState;
     @BindView(R.id.iv_add)
     ImageView mIvAdd;
     @BindView(R.id.rv_upload)
     RecyclerView mRvUpload;
+    @BindView(R.id.ll_resources)
+    LinearLayout mLlResources;
     @BindView(R.id.tv_img_hint)
     TextView mTvImgHint;
     @BindView(R.id.li_release)
     LinearLayout mLiRelease;
     Unbinder unbinder;
-    @BindView(R.id.ll_resources)
-    LinearLayout mLlResources;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
-    @BindView(R.id.tv_state)
-    TextView mTvState;
+    @BindView(R.id.et_content)
+    EditText mEtContent;
+    @BindView(R.id.lock_screen)
+    Switch mLockScreen;
 
-    private int mNoteType;//1.文字 2.图片  3.视频   4.录音
-    private List<String> mPathList = new ArrayList<>();
     private List<BmobFile> mFiles = new ArrayList<>();
+    private List<String> mPathList = new ArrayList<>();
+    private boolean isVisable = false;//是否仅自己可见  默认false
     private FileDisplayAdapter mAdapter;
 
-    public AddNoteFragment() {
+    public AddShowNoteFragment() {
         // Required empty public constructor
     }
 
-    public static AddNoteFragment newInstance(int noteType) {
-        AddNoteFragment fragment = new AddNoteFragment();
+
+    public static AddShowNoteFragment newInstance() {
+        AddShowNoteFragment fragment = new AddShowNoteFragment();
         Bundle args = new Bundle();
-        args.putInt(UserCenterActivity.NOTE_TYPE, noteType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -103,9 +107,8 @@ public class AddNoteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mNoteType = bundle.getInt(UserCenterActivity.NOTE_TYPE);
+        if (getArguments() != null) {
+
         }
     }
 
@@ -113,42 +116,17 @@ public class AddNoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_word_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_show_note, container, false);
         unbinder = ButterKnife.bind(this, view);
         initView();
         return view;
     }
 
     private void initView() {
-        mTvIncludeHeaderTitle.setText("添加笔记");
-        if (mNoteType == 1) {//文字
-            mLlResources.setVisibility(View.GONE);
-            mTvImgHint.setVisibility(View.GONE);
-        } else if(mNoteType==2) {
-            mLlResources.setVisibility(View.VISIBLE);
-            mTvImgHint.setVisibility(View.VISIBLE);
-            mTvImgHint.setText("最多添加9张图片");
-        }else {
-            mLlResources.setVisibility(View.VISIBLE);
-            mTvImgHint.setVisibility(View.VISIBLE);
-            mTvImgHint.setText("最多添加一个音视频");
-        }
-            mRvUpload.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            mAdapter = new FileDisplayAdapter(R.layout.item_upload_view, mFiles);
-            mRvUpload.setAdapter(mAdapter);
-
-            mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    switch (view.getId()) {
-                        case R.id.iv_delete://删除
-                            mAdapter.remove(position);
-                            //mFiles.remove(mFiles.get(position));
-                            mAdapter.notifyDataSetChanged();
-                            break;
-                    }
-                }
-            });
+        mTvIncludeHeaderTitle.setText("添加分享");
+        mLlResources.setVisibility(View.VISIBLE);
+        mTvImgHint.setVisibility(View.VISIBLE);
+        mTvImgHint.setText("最多添加1张图片");
 
         //实时监听输入内容  剩余字数
         mEtContent.addTextChangedListener(new TextWatcher() {
@@ -169,48 +147,56 @@ public class AddNoteFragment extends Fragment {
                 mTvLimitWords.setText("最多还可输入" + (100 - temp.length()) + "个字");
             }
         });
+
+        mRvUpload.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        mAdapter = new FileDisplayAdapter(R.layout.item_upload_view, mFiles);
+        mRvUpload.setAdapter(mAdapter);
+
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.iv_delete://删除
+                        mAdapter.remove(position);
+                        //mFiles.remove(mFiles.get(position));
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        });
+
+        mLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isVisable = true;
+                } else {
+                    isVisable = false;
+                }
+            }
+        });
     }
 
-    @OnClick({R.id.li_release, R.id.iv_add})
+    @OnClick({R.id.li_includeHeaderLeft,R.id.li_release, R.id.iv_add})
     protected void onClickView(View view) {
         switch (view.getId()) {
+            case R.id.li_includeHeaderLeft://返回
+                 getActivity().onBackPressed();
+                break;
             case R.id.li_release://提交
-                switch (mNoteType) {
-                    case 1://文字
-                    case 2://图片
-                    case 3://视频
-                        judgeAddNote();
-                        break;
-                    default:
-                }
+                judgeAddNote();
                 break;
             case R.id.iv_add:
-                if(mNoteType==2) {//图片添加
-                    if (mFiles.size() > 8) {
-                        ToastUtil.showToast(getContext(), "最多添加9张图片");
-                    } else {
-                        PictureSelector.create(AddNoteFragment.this)
-                                .openGallery(PictureMimeType.ofImage())
-                                .maxSelectNum(1)// 最大图片选择数量 int
-                                .compress(true)// 是否压缩 true or false
-                                .forResult(PictureConfig.CHOOSE_REQUEST);
-                    }
-                }else if(mNoteType==3){//视频添加
-                    if (mFiles.size() >=1) {
-                        ToastUtil.showToast(getContext(), "最多添加1个视频");
-                    } else {
-                        PictureSelector.create(AddNoteFragment.this)
-                                .openGallery(PictureMimeType.ofVideo())
-                                .isCamera(true)
-                                .enablePreviewAudio(true) // 是否可播放音频 true or false
-                                .maxSelectNum(1)// 最大图片选择数量 int
-                                .compress(true)// 是否压缩 true or false
-                                .forResult(PictureConfig.TYPE_VIDEO);
-                    }
+                if (mFiles.size() >1) {
+                    ToastUtil.showToast(getContext(), "最多添加1张图片");
+                } else {
+                    PictureSelector.create(AddShowNoteFragment.this)
+                            .openGallery(PictureMimeType.ofImage())
+                            .maxSelectNum(1)// 最大图片选择数量 int
+                            .compress(true)// 是否压缩 true or false
+                            .forResult(PictureConfig.CHOOSE_REQUEST);
                 }
                 break;
-
-
             default:
                 break;
         }
@@ -231,20 +217,6 @@ public class AddNoteFragment extends Fragment {
                             mPathList.add(localMedia.getPath());
                         }
                     }
-
-                    displayImage(mPathList);
-                    break;
-                case PictureConfig.TYPE_VIDEO://视频
-                    List<LocalMedia> VideoList = PictureSelector.obtainMultipleResult(data);
-
-                    for (LocalMedia localMedia : VideoList) {
-                        if (localMedia.isCompressed()) {
-                            mPathList.add(localMedia.getCompressPath());
-                        } else {
-                            mPathList.add(localMedia.getPath());
-                        }
-                    }
-
                     displayImage(mPathList);
                     break;
 
@@ -270,7 +242,6 @@ public class AddNoteFragment extends Fragment {
                         mTvState.setVisibility(View.GONE);
                         ToastUtil.showToast(getContext(), ("上传全部文件成功"));
                         mFiles = files;
-
                         mAdapter.setNewData(mFiles);
                     }
                 }
@@ -300,36 +271,27 @@ public class AddNoteFragment extends Fragment {
 
     //判断添加笔记
     private void judgeAddNote() {
-        String title = mEtTitle.getText().toString().trim();//标题
+
         String content = mEtContent.getText().toString().trim();//内容
-        if (TextUtils.isEmpty(title)) {
-            ToastUtil.showToast(getContext(), "标题不能为空");
-            return;
-        }
         if (TextUtils.isEmpty(content)) {
             ToastUtil.showToast(getContext(), "内容不能为空");
             return;
         }
 
         if (BmobUser.isLogin()) {
-            note post = new note();
-            post.setNoteTitle(title);
-            post.setNoteWords(content);
-            post.setNoteType(mNoteType);
-            //添加一对一关联，用户关联帖子
-            post.setAuthor(BeanUserBase.getCurrentUser(BeanUserBase.class));
-            post.setNotePicture(mFiles);
-            post.save(new SaveListener<String>() {
+            ShowNote mShowNote = new ShowNote();
+            mShowNote.setContent(content);
+            mShowNote.setPicture(mFiles);
+            mShowNote.setSelfVisible(isVisable);
+
+            mShowNote.setAuthor(BeanUserBase.getCurrentUser(BeanUserBase.class));
+            mShowNote.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
                     if (e == null) {
-                        if (mNoteType == 1) {
-                            ToastUtil.showToast(getContext(), "添加文字笔记成功");
-                        } else if (mNoteType == 2) {
-                            ToastUtil.showToast(getContext(), "添加图片笔记成功");
-                        }else if(mNoteType==3){
-                            ToastUtil.showToast(getContext(),"添加视频笔记成功");
-                        }
+
+                        ToastUtil.showToast(getContext(), "添加成功");
+                        getActivity().onBackPressed();
                     } else {
                         ToastUtil.showToast(getContext(), "添加音频记失败" + e.getErrorCode() + e.getMessage());
                     }
