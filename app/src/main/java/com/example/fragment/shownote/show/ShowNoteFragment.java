@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.bean.BeanUserBase;
 import com.example.bean.ShowNote;
+import com.example.bean.note;
 import com.example.fragment.adapter.ShowNoteAdapter;
 import com.example.fragment.shownote.ShowNoteActivity;
 import com.example.fragment.shownote.addshow.AddShowNoteFragment;
@@ -24,6 +27,7 @@ import com.example.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,7 @@ import butterknife.Unbinder;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author MW
@@ -100,15 +105,44 @@ public class ShowNoteFragment extends Fragment {
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                DisplayList();
                 mRefresh.setRefreshing(false);
             }
         });
         mAdapter = new ShowNoteAdapter(R.layout.item_show_content, null);
         mRvList.setAdapter(mAdapter);
 
-        DisplayList();
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.iv_trash://删除按钮
+                        ShowNote category = new ShowNote();
+
+                        category.delete(Objects.requireNonNull(mAdapter.getItem(position)).getObjectId(), new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    ToastUtil.showToast(getContext(), "删除成功");
+                                    DisplayList();
+                                } else {
+                                    ToastUtil.showToast(getContext(), "删除失败" + e.getErrorCode() + e.getMessage());
+                                }
+                            }
+                        });
+
+                        break;
+                }
+            }
+        });
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DisplayList();
+    }
 
     private void DisplayList() {
 
@@ -124,7 +158,7 @@ public class ShowNoteFragment extends Fragment {
         queries.add(mShowNote2);
         BmobQuery<ShowNote> categoryBmobQuery = new BmobQuery<>();
         categoryBmobQuery.or(queries);
-        categoryBmobQuery.include("user,post.author");
+        categoryBmobQuery.include("author");
         categoryBmobQuery.findObjects(new FindListener<ShowNote>() {
             @Override
             public void done(List<ShowNote> object, BmobException e) {
@@ -138,6 +172,21 @@ public class ShowNoteFragment extends Fragment {
                 }
             }
         });
+
+      /*  categoryBmobQuery.findObjects(new FindListener<BeanUserBase>() {
+            @Override
+            public void done(List<BeanUserBase> object, BmobException e) {
+                if (e == null) {
+                    //ToastUtil.showToast(getContext(), "查询数量" + object.size());
+                   // mAdapter.setNewData(object);
+
+                } else {
+                    Log.e("BMOB", e.toString());
+                    ToastUtil.showToast(getContext(), "失败" + e.getErrorCode() + e.getMessage());
+                }
+            }
+        });
+*/
 
     }
 

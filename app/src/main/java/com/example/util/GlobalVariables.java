@@ -17,6 +17,7 @@ public class GlobalVariables {
 
     public static final String USER_OBJECTID = "yj_user_object";//用户表  一列的objectId
 
+    public static final String USER_ROLE="yj_user_role";//用户角色  1.用户  2.管理员
 
     public static void setUsername(String username) {
 
@@ -34,6 +35,14 @@ public class GlobalVariables {
 
     public static String getUserObjectId() {
         return SharedPreferencesClass.getstring(BaseApplication.getContext(),USER_OBJECTID, "");
+    }
+
+    public static void setRole(int role) {
+        SharedPreferencesClass.putInt(BaseApplication.getContext(),USER_ROLE, role);
+    }
+
+    public static int getRole() {
+        return SharedPreferencesClass.getInt(BaseApplication.getContext(),USER_ROLE,1);
     }
 
 

@@ -289,7 +289,6 @@ public class AddShowNoteFragment extends Fragment {
                 @Override
                 public void done(String s, BmobException e) {
                     if (e == null) {
-
                         ToastUtil.showToast(getContext(), "添加成功");
                         getActivity().onBackPressed();
                     } else {

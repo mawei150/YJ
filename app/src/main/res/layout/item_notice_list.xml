@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toos="http://schemas.android.com/tools"
+    android:id="@+id/fl_message"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
+
+
+    <FrameLayout
+        android:id="@+id/news_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tv_message_news_content"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/font_color"
+            android:textSize="15sp"
+            toos:text="作业标题很长很长很长很长很长很长" />
+
+        <TextView
+            android:id="@+id/tv_home_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:textSize="10sp"
+            toos:text="2018-07-24 15:24:40" />
+
+        <TextView
+            android:id="@+id/tv_home_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="暂无消息"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/color4"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_home_count"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/layer_message_count_bg"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+</LinearLayout>

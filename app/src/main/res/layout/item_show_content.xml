@@ -18,14 +18,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="60dp">
 
             <com.example.util.advanced.CircleImageView
                 android:id="@+id/iv_profile"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:src="@mipmap/defult_avatar" />
 
             <TextView
@@ -42,14 +42,16 @@
                 android:id="@+id/tv_dateCrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_below="@+id/tv_displayName"
-                android:layout_toRightOf="@+id/iv_profile"
-                android:layout_marginTop="2dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="22dp"
+                android:layout_toEndOf="@+id/iv_profile"
                 android:minWidth="120dp"
+                android:textColor="@color/color4"
                 android:textSize="12sp"
-                android:textColor="@color/color1"
-                tools:text="2018-04-29 22:39:16" />
+                tools:text="2018-04-29 22:39:16"
+                android:layout_toRightOf="@+id/iv_profile" />
 
         </RelativeLayout>
 
@@ -57,9 +59,9 @@
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:textSize="14sp"
             android:textColor="@color/color1"
@@ -71,7 +73,6 @@
             android:layout_height="20dp"
             android:gravity="end"
             android:orientation="horizontal">
-
 
 
             <ImageView

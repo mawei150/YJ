@@ -14,8 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
+import com.example.bean.Notice;
 import com.example.fragment.allnote.AllNoteActivity;
+import com.example.fragment.allnote.notelist.NoteListFragment;
 import com.example.fragment.note.TodayNotesFragment;
+import com.example.fragment.notice.NoticeActivity;
+import com.example.fragment.notice.noticelist.NoticeListFragment;
 import com.example.fragment.shownote.ShowNoteActivity;
 import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
@@ -61,6 +65,10 @@ public class MainFragment extends Fragment {
     LinearLayout mLlAllNote;
     @BindView(R.id.ll_de_gemeenschap)
     LinearLayout mLlDeGemeenschap;
+    @BindView(R.id.ll_notice)
+    LinearLayout mLlNotice;
+    @BindView(R.id.ll_user)
+    LinearLayout mLlUser;
 
 
     private DrawerLayout drawer_layout;
@@ -89,6 +97,11 @@ public class MainFragment extends Fragment {
 
 
     private void initView() {
+        if (GlobalVariables.getRole() == 2) {//管理员
+            mLlUser.setVisibility(View.VISIBLE);
+        }else{
+            mLlUser.setVisibility(View.GONE);//用户
+        }
         showPersonalInformation();
     }
 
@@ -105,7 +118,7 @@ public class MainFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes,R.id.ll_all_note,R.id.ll_de_gemeenschap})
+    @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes, R.id.ll_all_note, R.id.ll_de_gemeenschap, R.id.ll_notice})
     public void onClickView(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -125,9 +138,15 @@ public class MainFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.ll_de_gemeenschap://社区
-                 intent=new Intent(getContext(), ShowNoteActivity.class);
+                intent = new Intent(getContext(), ShowNoteActivity.class);
                 intent.putExtra(Constant.FRAGMENT_ID, ShowNoteFragment.TAG);
+                startActivity(intent);
+                break;
+            case R.id.ll_notice://系统公告
+                 intent=new Intent(getContext(), NoticeActivity.class);
+                 intent.putExtra(Constant.FRAGMENT_ID, NoticeListFragment.TAG);
                  startActivity(intent);
+                break;
             default:
                 break;
         }

@@ -1,11 +1,14 @@
 package com.example.fragment.adapter;
 
 import android.support.annotation.Nullable;
-
+import android.text.TextUtils;
+import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.bean.ShowNote;
 import com.example.main.R;
+import com.example.util.GlobalVariables;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,8 +27,23 @@ public class ShowNoteAdapter extends BaseQuickAdapter<ShowNote, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, ShowNote item) {
-             helper.setText(R.id.tv_content,item.getContent());
-             helper.setText(R.id.tv_dateCrate,item.getCreatedAt());
-             helper.setText(R.id.tv_displayName,"王小明");
+        helper.setText(R.id.tv_content, item.getContent());
+        helper.setText(R.id.tv_dateCrate, item.getCreatedAt());
+        helper.setText(R.id.tv_displayName, item.getAuthor().getUsername());
+        if (TextUtils.isEmpty(item.getAuthor().getHeadimage())) {
+            Picasso.with(mContext).load(R.mipmap.ic_head1)
+                    .into((ImageView) helper.getView(R.id.iv_profile));
+        } else {
+            Picasso.with(mContext).load(item.getAuthor().getHeadimage())
+                    .into((ImageView) helper.getView(R.id.iv_profile));
+        }
+
+        if(item.getAuthor().getObjectId().equals(GlobalVariables.getUserObjectId())){//我的发布
+            helper.setVisible(R.id.iv_trash,true);
+        }else{//不是我的
+            helper.setVisible(R.id.iv_trash,false);
+        }
+
+        helper.addOnClickListener(R.id.iv_trash);
     }
 }

@@ -133,9 +133,14 @@ public class LoginActivity extends Activity {
             public void done(List<BeanUserBase> object, BmobException e) {
                 if (e == null) {
                     //ToastUtil.showToast(getApplicationContext(), object.get(0).getObjectId() + "");
-                     GlobalVariables.setUsername(account);//存用户名
-                     GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
-                     //跳主页面
+                    GlobalVariables.setUsername(account);//存用户名
+                    GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
+                    if (object.get(0).getRole() == 2) {
+                        GlobalVariables.setRole(2);
+                    } else {
+                        GlobalVariables.setRole(1);
+                    }
+                    //跳主页面
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
 

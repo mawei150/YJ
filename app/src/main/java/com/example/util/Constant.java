@@ -14,5 +14,6 @@ public class Constant {
 
     public static final  String  HEADPORTRAIT="yj_head_portrait";//头像发生更改
 
+    public static final  String  NOTICE_ISREAD="yj_notice_isRead";
 
 }

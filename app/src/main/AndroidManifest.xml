@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.fragment.shownote.ShowNoteActivity"></activity>
+        <activity android:name="com.example.fragment.notice.NoticeActivity"></activity>
+        <activity android:name="com.example.fragment.shownote.ShowNoteActivity" />
         <activity android:name="com.example.fragment.allnote.AllNoteActivity" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
         <activity
             android:name="com.example.fragment.usercenter.UserCenterActivity"
