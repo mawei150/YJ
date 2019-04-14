@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.bean.ShowNote;
 import com.example.fragment.shownote.addshow.AddShowNoteFragment;
+import com.example.fragment.shownote.reply.AddShowNoteReplyFragment;
 import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.main.R;
 import com.example.util.Constant;
@@ -22,12 +24,14 @@ public class ShowNoteActivity extends AppCompatActivity {
 
     private Fragment mFragment;
     private String mResId;
+    private ShowNote  mShowNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
         mResId=getIntent().getStringExtra(Constant.FRAGMENT_ID);
+        mShowNote= (ShowNote) getIntent().getSerializableExtra(ShowNote.class.getCanonicalName());
         initView();
     }
 
@@ -43,8 +47,11 @@ public class ShowNoteActivity extends AppCompatActivity {
             case ShowNoteFragment.TAG://展示社区
                 mFragment=ShowNoteFragment.newInstance();
                 break;
-            case AddShowNoteFragment.TAG://添加意见
+            case AddShowNoteFragment.TAG://添加贴子
                 mFragment=AddShowNoteFragment.newInstance();
+                break;
+            case AddShowNoteReplyFragment.TAG://添加贴子回复
+                mFragment=AddShowNoteReplyFragment.newInstance(mShowNote);
                 break;
             default:
                 break;

@@ -14,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
-import com.example.bean.Notice;
 import com.example.fragment.allnote.AllNoteActivity;
-import com.example.fragment.allnote.notelist.NoteListFragment;
 import com.example.fragment.note.TodayNotesFragment;
 import com.example.fragment.notice.NoticeActivity;
 import com.example.fragment.notice.noticelist.NoticeListFragment;
@@ -24,6 +22,7 @@ import com.example.fragment.shownote.ShowNoteActivity;
 import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
 import com.example.fragment.usercenter.UserCenterActivity;
+import com.example.login.LoginActivity;
 import com.example.main.R;
 import com.example.util.Constant;
 import com.example.util.GlobalVariables;
@@ -69,6 +68,8 @@ public class MainFragment extends Fragment {
     LinearLayout mLlNotice;
     @BindView(R.id.ll_user)
     LinearLayout mLlUser;
+    @BindView(R.id.ll_logout)
+    LinearLayout mLlLogout;
 
 
     private DrawerLayout drawer_layout;
@@ -99,7 +100,7 @@ public class MainFragment extends Fragment {
     private void initView() {
         if (GlobalVariables.getRole() == 2) {//管理员
             mLlUser.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mLlUser.setVisibility(View.GONE);//用户
         }
         showPersonalInformation();
@@ -118,7 +119,8 @@ public class MainFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes, R.id.ll_all_note, R.id.ll_de_gemeenschap, R.id.ll_notice})
+    @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes, R.id.ll_all_note, R.id.ll_de_gemeenschap, R.id.ll_notice,
+            R.id.ll_logout})
     public void onClickView(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -143,9 +145,15 @@ public class MainFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.ll_notice://系统公告
-                 intent=new Intent(getContext(), NoticeActivity.class);
-                 intent.putExtra(Constant.FRAGMENT_ID, NoticeListFragment.TAG);
-                 startActivity(intent);
+                intent = new Intent(getContext(), NoticeActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, NoticeListFragment.TAG);
+                startActivity(intent);
+                break;
+            case R.id.ll_logout://退出登录
+                BeanUserBase.logOut();//退出登录
+                intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
                 break;
             default:
                 break;

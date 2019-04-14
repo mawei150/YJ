@@ -164,7 +164,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         radius = Math.min(width, height) / 2;
     }
 
-    /*       Bitmap位图包括像素以及长、宽、颜色等描述信息。长宽和像素位数是用来描述图片的
+    /* Bitmap位图包括像素以及长、宽、颜色等描述信息。长宽和像素位数是用来描述图片的
      * 位图可以理解为一个画架，把图放到上面然后可以对图片做一些列的处理。
      */
 

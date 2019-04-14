@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.fragment.shownote.reply.AddShowNoteReplyFragment">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.example.util.advanced.CircleImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/defult_avatar"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_displayName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/iv_profile"
+                    android:ellipsize="end"
+                    android:minLines="2"
+                    android:textColor="#FF383838"
+                    android:textSize="16sp"
+                    tools:text="王立萍" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:textSize="14sp"
+                tools:text="标题很长很长很长标题的内容很长很长很长很长标题的内容很长很长很长标题的内容很长很长很长标题的内容很长很长很长标题的内容很长很长很长标题的内容很长很长很长" />
+
+            <ImageView
+                android:id="@+id/ll_file"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@mipmap/ic_head1" />
+
+            <TextView
+                android:id="@+id/tv_dateCrate"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="end"
+                android:minWidth="120dp"
+                android:textSize="12sp"
+                tools:text="2018-04-29 22:39:16" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

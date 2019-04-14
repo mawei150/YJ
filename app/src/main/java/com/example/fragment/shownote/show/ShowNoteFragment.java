@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.bean.BeanUserBase;
 import com.example.bean.ShowNote;
-import com.example.bean.note;
 import com.example.fragment.adapter.ShowNoteAdapter;
 import com.example.fragment.shownote.ShowNoteActivity;
 import com.example.fragment.shownote.addshow.AddShowNoteFragment;
+import com.example.fragment.shownote.reply.AddShowNoteReplyFragment;
 import com.example.main.R;
 import com.example.util.Constant;
 import com.example.util.GlobalVariables;
@@ -115,10 +113,9 @@ public class ShowNoteFragment extends Fragment {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.iv_trash://删除按钮
                         ShowNote category = new ShowNote();
-
                         category.delete(Objects.requireNonNull(mAdapter.getItem(position)).getObjectId(), new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
@@ -130,9 +127,29 @@ public class ShowNoteFragment extends Fragment {
                                 }
                             }
                         });
-
                         break;
+                  /*  *//*case R.id.fl_reply://回复按钮
+                        Intent intent=new Intent(getContext(),ShowNoteActivity.class);
+                        intent*//*
+                        break;*/
+                        default:
+                            break;
                 }
+            }
+        });
+
+        //点击事件
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                      ShowNote showNote=mAdapter.getItem(position);
+                       if(showNote==null){
+                           return;
+                       }
+                      Intent intent=new Intent(getContext(),ShowNoteActivity.class);
+                      intent.putExtra(Constant.FRAGMENT_ID, AddShowNoteReplyFragment.TAG);
+                      intent.putExtra(ShowNote.class.getCanonicalName(),showNote);
+                      startActivity(intent);
             }
         });
     }
@@ -173,20 +190,6 @@ public class ShowNoteFragment extends Fragment {
             }
         });
 
-      /*  categoryBmobQuery.findObjects(new FindListener<BeanUserBase>() {
-            @Override
-            public void done(List<BeanUserBase> object, BmobException e) {
-                if (e == null) {
-                    //ToastUtil.showToast(getContext(), "查询数量" + object.size());
-                   // mAdapter.setNewData(object);
-
-                } else {
-                    Log.e("BMOB", e.toString());
-                    ToastUtil.showToast(getContext(), "失败" + e.getErrorCode() + e.getMessage());
-                }
-            }
-        });
-*/
 
     }
 

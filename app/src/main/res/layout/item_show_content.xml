@@ -67,6 +67,16 @@
             android:textColor="@color/color1"
             tools:text="笔记的内容" />
 
+        <com.luck.picture.lib.photoview.PhotoView
+            android:id="@+id/ll_file"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:src="@mipmap/ic_head1" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

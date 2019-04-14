@@ -1,6 +1,7 @@
 package com.example.fragment.adapter;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,10 +28,28 @@ public class NoticeListAdapter extends BaseQuickAdapter<Notice, BaseViewHolder> 
         helper.setText(R.id.tv_message_news_content,item.getTitle());
         helper.setText(R.id.tv_home_date,item.getCreatedAt());
         helper.setText(R.id.tv_home_content,item.getContent());
-        if(GlobalVariables.getRole()==2 || item.isRead()){//如果  角色是管理员  且已读  那么不显示
+
+        /*if(GlobalVariables.getRole()==2 || (!TextUtils.isEmpty(item.getAuthor().getNoticeId()) && !TextUtils.isEmpty(item.getAuthor().getUserId()) &&
+                item.getObjectId().equals(item.getAuthor().getNoticeId())&&GlobalVariables.USER_OBJECTID.equals(item.getAuthor().getUserId()))){//如果  角色是管理员  且已读  那么不显示
               helper.setVisible(R.id.tv_home_count,false);
         }else{
             helper.setVisible(R.id.tv_home_count,true);
+        }*/
+        if( GlobalVariables.getRole()==2){//管理员不显示
+            helper.setVisible(R.id.tv_home_count,false);
+        }else{
+            if( item.getReadArray().size()==0){
+                helper.setVisible(R.id.tv_home_count,true);
+            }else{
+                helper.setVisible(R.id.tv_home_count,true);
+                for (Object o : item.getReadArray()) {
+                      if(o.equals(GlobalVariables.getUserObjectId())){
+                          helper.setVisible(R.id.tv_home_count,false);
+                      }
+                }
+            }
+
         }
+
     }
 }

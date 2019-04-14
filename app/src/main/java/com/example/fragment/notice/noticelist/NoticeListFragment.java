@@ -17,6 +17,7 @@ import com.example.bean.Notice;
 import com.example.fragment.adapter.NoticeListAdapter;
 import com.example.fragment.adapter.ShowNoteAdapter;
 import com.example.fragment.notice.NoticeActivity;
+import com.example.fragment.notice.addnotice.AddNoticeFragment;
 import com.example.fragment.notice.noticedetail.NoticeDetailFragment;
 import com.example.fragment.shownote.ShowNoteActivity;
 import com.example.fragment.shownote.addshow.AddShowNoteFragment;
@@ -103,7 +104,7 @@ public class NoticeListFragment extends Fragment {
         mTvIncludeHeaderTitle.setText("系统公告");
         if (GlobalVariables.getRole() == 2) {//管理员  出现添加
             mLiIncludeHeaderRight.setVisibility(View.VISIBLE);
-            mTvIncludeHeaderTitle.setText("新增");
+            mTvIncludeHeaderRight.setText("新增");
         } else {
             mLiIncludeHeaderRight.setVisibility(View.GONE);
         }
@@ -135,19 +136,18 @@ public class NoticeListFragment extends Fragment {
     }
 
     private void DisplayList() {
-        BmobQuery<Notice> bmobQuery = new BmobQuery<Notice>();
+        BmobQuery<Notice> bmobQuery = new BmobQuery<>();
+        bmobQuery.include("author");
         bmobQuery.findObjects(new FindListener<Notice>() {
             @Override
             public void done(List<Notice> object, BmobException e) {
                 if (e == null) {
-                    //注意：这里的Person对象中只有指定列的数据。
                     mAdapter.setNewData(object);
                 } else {
                     ToastUtil.showToast(getContext(), "查询失败");
                 }
             }
         });
-
 
     }
 
@@ -157,10 +157,10 @@ public class NoticeListFragment extends Fragment {
             case R.id.li_includeHeaderLeft://返回
                 getActivity().onBackPressed();
                 break;
-            case R.id.li_includeHeaderRight://发帖
-                /*Intent intent = new Intent(getContext(), ShowNoteActivity.class);
-                intent.putExtra(Constant.FRAGMENT_ID, AddShowNoteFragment.TAG);
-                startActivity(intent);*/
+            case R.id.li_includeHeaderRight://新增公告
+                Intent intent = new Intent(getContext(), NoticeActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, AddNoticeFragment.TAG);
+                startActivity(intent);
 
                 break;
             default:

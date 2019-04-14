@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header_view" />
+
+    <include
+        android:layout_above="@+id/fl_comment"
+        android:layout_below="@+id/rl_includeHeader"
+        layout="@layout/fragment_recyclerview_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
+
+    <FrameLayout
+        android:id="@+id/fl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="3dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_stroke_corner_deep_grey"
+            android:gravity="start|center"
+            android:padding="5dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/iv_send"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:layout_margin="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape_stroke_corner_deep_grey"
+            android:gravity="center"
+            android:padding="3dp"
+            android:textColor="@color/mainColor"
+            android:text="发送" />
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.bean.Notice;
+import com.example.fragment.notice.addnotice.AddNoticeFragment;
 import com.example.fragment.notice.noticedetail.NoticeDetailFragment;
 import com.example.fragment.notice.noticelist.NoticeListFragment;
 import com.example.fragment.shownote.addshow.AddShowNoteFragment;
@@ -43,6 +44,9 @@ public class NoticeActivity extends AppCompatActivity {
                 break;
             case NoticeDetailFragment.TAG:
                 mFragment=NoticeDetailFragment.newInstance(mNotice);
+                break;
+            case  AddNoticeFragment.TAG://添加公告
+                mFragment=AddNoticeFragment.newInstance();
                 break;
             default:
                 break;

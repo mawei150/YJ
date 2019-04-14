@@ -187,7 +187,7 @@ public class AddShowNoteFragment extends Fragment {
                 judgeAddNote();
                 break;
             case R.id.iv_add:
-                if (mFiles.size() >1) {
+                if (mFiles.size() >=1) {
                     ToastUtil.showToast(getContext(), "最多添加1张图片");
                 } else {
                     PictureSelector.create(AddShowNoteFragment.this)
@@ -292,7 +292,7 @@ public class AddShowNoteFragment extends Fragment {
                         ToastUtil.showToast(getContext(), "添加成功");
                         getActivity().onBackPressed();
                     } else {
-                        ToastUtil.showToast(getContext(), "添加音频记失败" + e.getErrorCode() + e.getMessage());
+                        ToastUtil.showToast(getContext(), "添加失败" + e.getErrorCode() + e.getMessage());
                     }
                 }
             });

@@ -40,6 +40,7 @@ public class BeanUserBase extends BmobUser  {
     private  String  desc;//简介
     private  BmobFile image;//个人头像
     private  int  role;//角色  1:用户  2:管理员
+    private  String  nickname;//用户昵称
     private  String  headimage;
 
     public boolean isSex() {
@@ -80,5 +81,13 @@ public class BeanUserBase extends BmobUser  {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

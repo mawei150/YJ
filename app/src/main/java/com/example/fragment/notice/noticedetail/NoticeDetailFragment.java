@@ -19,6 +19,9 @@ import com.example.util.advanced.BeanEventBus;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,6 +53,8 @@ public class NoticeDetailFragment extends Fragment {
     Unbinder unbinder;
 
     private Notice mNotice;
+    private boolean mIsRead = false;//默认未读
+    private List mList=new ArrayList<>();
 
     public NoticeDetailFragment() {
         // Required empty public constructor
@@ -90,25 +95,35 @@ public class NoticeDetailFragment extends Fragment {
         mTvTime.setText("创建时间: " + mNotice.getCreatedAt());
         mTvContent.setText(mNotice.getContent());
 
-        
-        if (GlobalVariables.getRole() != 2 && !mNotice.isRead()) {//如果  角色是管理员  且未读   走已读接口
-            Notice category = new Notice();
-            category.setRead(true);
-            category.update(mNotice.getObjectId(), new UpdateListener() {
-                @Override
-                public void done(BmobException e) {
-                    if (e == null) {
-                        BeanEventBus eventBus=new BeanEventBus(Constant.NOTICE_ISREAD);
-                        EventBus.getDefault().post(eventBus);
 
-                    } else {
-                        ToastUtil.showToast(getContext(),"已读失败");
+        if (GlobalVariables.getRole() != 2) {//如果角色是用户  有人已读
+
+            if (mNotice.getReadArray().size() != 0) {
+                for (Object o : mNotice.getReadArray()) {
+                    if (o.equals(GlobalVariables.getUserObjectId())) {
+                        mIsRead = true;
                     }
                 }
-            });
+            }
+            if (!mIsRead) {//未存在
+                Notice category = new Notice();
+                mList=mNotice.getReadArray();
+                mList.add(GlobalVariables.getUserObjectId());
+                category.setReadArray(mList);
+                category.update(mNotice.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            BeanEventBus eventBus = new BeanEventBus(Constant.NOTICE_ISREAD);
+                            EventBus.getDefault().post(eventBus);
 
+                        } else {
+                            ToastUtil.showToast(getContext(), "已读失败");
+                        }
+                    }
+                });
+            }
         }
-
     }
 
     @OnClick({R.id.li_includeHeaderLeft})
