@@ -26,7 +26,7 @@ public class NoteTypeDialog extends Dialog {
     private TextView mTvImg;//图片笔记
     private TextView mTvWord;//文字笔记
     private TextView mTvVideo;//视频笔记
-    private TextView mTvSoundRecord;//音频笔记
+    //private TextView mTvSoundRecord;//音频笔记
     private TextView mTvCancel;//取消
     public NoteTypeDialogClickLister onteTypeClickLister;
 
@@ -59,7 +59,7 @@ public class NoteTypeDialog extends Dialog {
         mTvImg = findViewById(R.id.tv_img);
         mTvWord = findViewById(R.id.tv_word);
         mTvVideo = findViewById(R.id.tv_video);
-        mTvSoundRecord = findViewById(R.id.tv_sound_record);
+        //mTvSoundRecord = findViewById(R.id.tv_sound_record);
         mTvCancel = findViewById(R.id.tvSelectPhotoCancel);
 
         mTvImg.setOnClickListener(new View.OnClickListener() {
@@ -86,14 +86,14 @@ public class NoteTypeDialog extends Dialog {
                 }
             }
         });
-        mTvSoundRecord.setOnClickListener(new View.OnClickListener() {
+       /* mTvSoundRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onteTypeClickLister != null) {
                     onteTypeClickLister.SoundRecordOnClickLister();
                 }
             }
-        });
+        });*/
         mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

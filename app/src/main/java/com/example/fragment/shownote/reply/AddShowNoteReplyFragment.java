@@ -172,12 +172,6 @@ public class AddShowNoteReplyFragment extends Fragment {
 
 
 
-
-
-
-
-
-
         if (mAdapter.getHeaderLayoutCount() == 0) {//mAdapter添加头
             View headView = LayoutInflater.from(getContext()).inflate(R.layout.header_add_show_note_reply, mRvList, false);
             ViewHolder viewHolder = new ViewHolder(headView);
@@ -243,7 +237,6 @@ public class AddShowNoteReplyFragment extends Fragment {
             ToastUtil.showToast(getContext(), "发送信息不能为空");
             return;
         }
-
         BeanUserBase user = BmobUser.getCurrentUser(BeanUserBase.class);
         ShowNote post = new ShowNote();
         post.setObjectId(mShowNote.getObjectId());

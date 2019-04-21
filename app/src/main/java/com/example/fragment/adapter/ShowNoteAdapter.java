@@ -30,7 +30,7 @@ public class ShowNoteAdapter extends BaseQuickAdapter<ShowNote, BaseViewHolder> 
     protected void convert(BaseViewHolder helper, ShowNote item) {
         helper.setText(R.id.tv_content, item.getContent());
         helper.setText(R.id.tv_dateCrate, item.getCreatedAt());
-        helper.setText(R.id.tv_displayName, item.getAuthor().getUsername());
+        helper.setText(R.id.tv_displayName, "测试用户");
         if (TextUtils.isEmpty(item.getAuthor().getHeadimage())) {
             Picasso.with(mContext).load(R.mipmap.ic_head1)
                     .into((ImageView) helper.getView(R.id.iv_profile));

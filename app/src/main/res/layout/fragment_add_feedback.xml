@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_main_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_header_view" />
+
+        <EditText
+            android:id="@+id/ed_real_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_stroke_corner_3dp_grey"
+            android:elevation="1dp"
+            android:hint="请输入您的真实姓名"
+            android:maxEms="11"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="@color/color4"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/ed_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_stroke_corner_3dp_grey"
+            android:digits="1234567890"
+            android:elevation="1dp"
+            android:hint="请输入您的手机号码"
+            android:maxEms="11"
+            android:padding="10dp"
+            android:textColor="@color/color4"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_stroke_corner_4dp_white"
+            android:elevation="1dp"
+            android:gravity="top"
+            android:hint="请告知我们您遇到的问题或者个人需求"
+            android:maxEms="200"
+            android:padding="5dp"
+            android:textSize="13sp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/mainColor"
+            android:max="100"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:text="正在上传,请稍候"
+            android:textColor="#8F8F8F"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <include layout="@layout/include_upload_file_layout" />
+
+
+        <TextView
+            android:id="@+id/tv_img_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="(*最多可上传1张图片)"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_stroke_corner_5dp_maincolor"
+                android:gravity="center"
+                android:text=" 提 交 "
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</ScrollView>

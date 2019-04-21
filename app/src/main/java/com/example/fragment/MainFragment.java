@@ -15,10 +15,14 @@ import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
 import com.example.fragment.allnote.AllNoteActivity;
+import com.example.fragment.feedback.FeedbackActivity;
+import com.example.fragment.feedback.addfeedback.AddFeedbackFragment;
+import com.example.fragment.feedback.feedbacklist.FeedbackListFragment;
 import com.example.fragment.note.TodayNotesFragment;
 import com.example.fragment.notice.NoticeActivity;
 import com.example.fragment.notice.noticelist.NoticeListFragment;
 import com.example.fragment.shownote.ShowNoteActivity;
+import com.example.fragment.shownote.addshow.AddShowNoteFragment;
 import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
 import com.example.fragment.usercenter.UserCenterActivity;
@@ -70,6 +74,8 @@ public class MainFragment extends Fragment {
     LinearLayout mLlUser;
     @BindView(R.id.ll_logout)
     LinearLayout mLlLogout;
+    @BindView(R.id.ll_feedback)
+    LinearLayout mLlFeedback;
 
 
     private DrawerLayout drawer_layout;
@@ -120,7 +126,7 @@ public class MainFragment extends Fragment {
 
 
     @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes, R.id.ll_all_note, R.id.ll_de_gemeenschap, R.id.ll_notice,
-            R.id.ll_logout})
+            R.id.ll_logout, R.id.ll_feedback})
     public void onClickView(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -155,6 +161,16 @@ public class MainFragment extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
                 break;
+            case R.id.ll_feedback://意见反馈
+                intent = new Intent(getContext(), FeedbackActivity.class);
+                //如果是管理员  跳用户反馈列表  如果是用户  跳添加反馈界面
+                if (GlobalVariables.getRole() == 2) {//管理员
+                     intent.putExtra(Constant.FRAGMENT_ID, FeedbackListFragment.TAG);
+                } else {
+                    intent.putExtra(Constant.FRAGMENT_ID, AddFeedbackFragment.TAG);
+                }
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -172,7 +188,7 @@ public class MainFragment extends Fragment {
             @Override
             public void done(BeanUserBase userBase, BmobException e) {
                 if (e == null) {
-                    mTvNickName.setText(GlobalVariables.getUsername());
+                    mTvNickName.setText("测试用户");
                     if (userBase.getHeadimage() != null) {
                         /*File mFile = userBase.getImgage();
                         Bitmap bitmap = BitmapFactory.decodeFile(mFile.toString());//将文件路径解码为位图

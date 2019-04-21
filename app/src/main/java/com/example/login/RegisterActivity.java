@@ -155,10 +155,8 @@ public class RegisterActivity extends Activity {
                             @Override
                             public void done(Integer smsId, BmobException e) {
                                 if (e == null) {
-                                    //mTvInfo.append("发送验证码成功，短信ID：" + smsId + "\n");
                                     ToastUtil.showToast(getApplicationContext(), "短信发送成功");
                                 } else {
-                                    // mTvInfo.append("发送验证码失败：" + e.getErrorCode() + "-" + e.getMessage() + "\n");
                                     ToastUtil.showToast(getApplicationContext(), "发送验证码失败：" + e.getErrorCode() + "-" + e.getMessage() + "\n");
                                 }
                             }

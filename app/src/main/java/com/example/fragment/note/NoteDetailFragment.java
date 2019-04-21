@@ -72,7 +72,7 @@ public class NoteDetailFragment extends Fragment {
     public static NoteDetailFragment newInstance(note mnote) {
         NoteDetailFragment fragment = new NoteDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable(note.class.getCanonicalName(),mnote);
+        args.putSerializable(note.class.getCanonicalName(), mnote);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,9 +80,9 @@ public class NoteDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle=getArguments();
+        Bundle bundle = getArguments();
         if (bundle != null) {
-            mNote= (note) bundle.getSerializable(note.class.getCanonicalName());
+            mNote = (note) bundle.getSerializable(note.class.getCanonicalName());
         }
     }
 
@@ -99,23 +99,22 @@ public class NoteDetailFragment extends Fragment {
     private void initView() {
 
         mTvIncludeHeaderTitle.setText("笔记详情");
-        mTvTitle.setText("标题: "+mNote.getNoteTitle());
-        mTvTime.setText("创建时间: "+mNote.getCreatedAt());
-        switch (mNote.getNoteType()){
+        mTvTitle.setText("标题: " + mNote.getNoteTitle());
+        mTvTime.setText("创建时间: " + mNote.getCreatedAt());
+        switch (mNote.getNoteType()) {
             case 1:
                 mTvType.setText("文字笔记");
                 break;
             case 2:
                 mTvType.setText("图片笔记");
-                if(mNote.getNotePicture() !=null) {
-                   // List<BmobFile> files= (List<BmobFile>) mNote.getNotePicture();
+                if (mNote.getNotePicture() != null) {
+                    // List<BmobFile> files= (List<BmobFile>) mNote.getNotePicture();
                     mRvList.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-                    mAdapter = new PictureDisplayAdapter(R.layout.item_picture,mNote.getNotePicture());
+                    mAdapter = new PictureDisplayAdapter(R.layout.item_picture, mNote.getNotePicture());
                     mRvList.setAdapter(mAdapter);
                     mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            ToastUtil.showToast(getContext(),"我是图片啊 滴滴");
                             PictureSelector.create(NoteDetailFragment.this).themeStyle(1).openExternalPreview(position, (List<LocalMedia>) mAdapter.getItem(position));
 
                         }
@@ -124,10 +123,10 @@ public class NoteDetailFragment extends Fragment {
                 break;
             case 3:
                 mTvType.setText("视频笔记");
-                if(mNote.getNotePicture() !=null) {
+                if (mNote.getNotePicture() != null) {
                     // List<BmobFile> files= (List<BmobFile>) mNote.getNotePicture();
                     mRvList.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-                    mAdapter = new PictureDisplayAdapter(R.layout.item_picture,mNote.getNotePicture());
+                    mAdapter = new PictureDisplayAdapter(R.layout.item_picture, mNote.getNotePicture());
                     mRvList.setAdapter(mAdapter);
                     mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
@@ -141,22 +140,16 @@ public class NoteDetailFragment extends Fragment {
             case 4:
                 mTvType.setText("音频笔记");
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
-        if(TextUtils.isEmpty(mNote.getNoteWords())){//内容为空
+        if (TextUtils.isEmpty(mNote.getNoteWords())) {//内容为空
             mTvContent.setVisibility(View.GONE);
-        }else{
+        } else {
             mTvContent.setVisibility(View.VISIBLE);
             mTvContent.setText(mNote.getNoteWords());
         }
-
-
-
-
-
-
     }
 
 

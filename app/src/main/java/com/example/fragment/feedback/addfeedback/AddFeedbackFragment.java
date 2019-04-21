@@ -1,35 +1,35 @@
-package com.example.fragment.shownote.addshow;
+package com.example.fragment.feedback.addfeedback;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.bean.BeanUserBase;
-import com.example.bean.ShowNote;
-import com.example.bean.note;
+import com.example.bean.Feedback;
+import com.example.bean.Notice;
 import com.example.fragment.adapter.FileDisplayAdapter;
+import com.example.fragment.shownote.addshow.AddShowNoteFragment;
 import com.example.main.R;
+import com.example.util.Constant;
 import com.example.util.ToastUtil;
+import com.example.util.advanced.BeanEventBus;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,27 +46,27 @@ import cn.bmob.v3.listener.UploadBatchListener;
 
 import static android.app.Activity.RESULT_OK;
 
-
 /**
  * @author MW
- * @date 2019/4/9
+ * @date 2019/4/21
  * <p>
- * 描述： 添加个人  分享
+ * 描述： 添加用户添加意见反馈
  */
 
+public class AddFeedbackFragment extends Fragment {
 
-public class AddShowNoteFragment extends Fragment {
-
-    public static final String TAG = "AddShowNoteFragment";
+    public static final String TAG = "AddFeedbackFragment";
 
     @BindView(R.id.tv_includeHeaderTitle)
     TextView mTvIncludeHeaderTitle;
     @BindView(R.id.li_includeHeaderLeft)
     LinearLayout mLiIncludeHeaderLeft;
-    @BindView(R.id.li_includeHeaderRight)
-    LinearLayout mLiIncludeHeaderRight;
-    @BindView(R.id.tv_limit_words)
-    TextView mTvLimitWords;
+    @BindView(R.id.ed_real_name)
+    EditText mEdRealName;
+    @BindView(R.id.ed_phone)
+    EditText mEdPhone;
+    @BindView(R.id.et_content)
+    EditText mEtContent;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.tv_state)
@@ -79,74 +79,42 @@ public class AddShowNoteFragment extends Fragment {
     LinearLayout mLlResources;
     @BindView(R.id.tv_img_hint)
     TextView mTvImgHint;
-    @BindView(R.id.li_release)
-    LinearLayout mLiRelease;
+    @BindView(R.id.tv_submit)
+    TextView mTvSubmit;
     Unbinder unbinder;
-    @BindView(R.id.et_content)
-    EditText mEtContent;
-    @BindView(R.id.lock_screen)
-    Switch mLockScreen;
 
     private List<BmobFile> mFiles = new ArrayList<>();
     private List<String> mPathList = new ArrayList<>();
-    private boolean isVisable = false;//是否仅自己可见  默认false
     private FileDisplayAdapter mAdapter;
 
-    public AddShowNoteFragment() {
+    public AddFeedbackFragment() {
         // Required empty public constructor
     }
 
-
-    public static AddShowNoteFragment newInstance() {
-        AddShowNoteFragment fragment = new AddShowNoteFragment();
+    public static AddFeedbackFragment newInstance() {
+        AddFeedbackFragment fragment = new AddFeedbackFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_show_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_feedback, container, false);
         unbinder = ButterKnife.bind(this, view);
         initView();
         return view;
     }
 
+
     private void initView() {
-        mTvIncludeHeaderTitle.setText("添加分享");
+        mTvIncludeHeaderTitle.setText("意见反馈");
         mLlResources.setVisibility(View.VISIBLE);
         mTvImgHint.setVisibility(View.VISIBLE);
         mTvImgHint.setText("最多添加1张图片");
-
-        //实时监听输入内容  剩余字数
-        mEtContent.addTextChangedListener(new TextWatcher() {
-            private CharSequence temp;
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                temp = charSequence;
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                mTvLimitWords.setText("最多还可输入" + (100 - temp.length()) + "个字");
-            }
-        });
 
         mRvUpload.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         mAdapter = new FileDisplayAdapter(R.layout.item_upload_view, mFiles);
@@ -158,6 +126,7 @@ public class AddShowNoteFragment extends Fragment {
                 switch (view.getId()) {
                     case R.id.iv_delete://删除
                         mAdapter.remove(position);
+                        //ToastUtil.showToast(getContext(),position+"");
                         //mFiles.remove(mFiles.get(position));
                         mPathList.remove(position);
                         mAdapter.notifyDataSetChanged();
@@ -165,33 +134,22 @@ public class AddShowNoteFragment extends Fragment {
                 }
             }
         });
-
-        mLockScreen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    isVisable = true;
-                } else {
-                    isVisable = false;
-                }
-            }
-        });
     }
 
-    @OnClick({R.id.li_includeHeaderLeft,R.id.li_release, R.id.iv_add})
+    @OnClick({R.id.li_includeHeaderLeft, R.id.tv_submit, R.id.iv_add})
     protected void onClickView(View view) {
         switch (view.getId()) {
             case R.id.li_includeHeaderLeft://返回
-                 getActivity().onBackPressed();
+                getActivity().onBackPressed();
                 break;
-            case R.id.li_release://提交
-                judgeAddNote();
+            case R.id.tv_submit://提交
+                judgeAddFeedBack();
                 break;
-            case R.id.iv_add:
-                if (mFiles.size() >=1) {
+            case R.id.iv_add://添加图片
+                if (mFiles.size() >= 1) {
                     ToastUtil.showToast(getContext(), "最多添加1张图片");
                 } else {
-                    PictureSelector.create(AddShowNoteFragment.this)
+                    PictureSelector.create(AddFeedbackFragment.this)
                             .openGallery(PictureMimeType.ofImage())
                             .maxSelectNum(1)// 最大图片选择数量 int
                             .compress(true)// 是否压缩 true or false
@@ -219,6 +177,7 @@ public class AddShowNoteFragment extends Fragment {
                     }
                     displayImage(mPathList);
                     break;
+
                 default:
                     break;
             }
@@ -230,7 +189,6 @@ public class AddShowNoteFragment extends Fragment {
         if (mPathList.size() != 0) {
             final String[] characters = mPathList.toArray(new String[mPathList.size()]);
             BmobFile.uploadBatch(characters, new UploadBatchListener() {
-
                 @Override
                 public void onSuccess(List<BmobFile> files, List<String> urls) {
                     //1、files-上传完成后的BmobFile集合，是为了方便大家对其上传后的数据进行操作，例如你可以将该文件保存到表中
@@ -239,7 +197,7 @@ public class AddShowNoteFragment extends Fragment {
                         //do something
                         mProgressBar.setVisibility(View.GONE);
                         mTvState.setVisibility(View.GONE);
-                        ToastUtil.showToast(getContext(), ("上传全部文件成功"));
+                        ToastUtil.showToast(getContext(), ("上传图片成功"));
                         mFiles = files;
                         mAdapter.setNewData(mFiles);
                     }
@@ -247,7 +205,7 @@ public class AddShowNoteFragment extends Fragment {
 
                 @Override
                 public void onError(int statuscode, String errormsg) {
-                    ToastUtil.showToast(getContext(), ("上传文件失败：" + statuscode + errormsg));
+                    ToastUtil.showToast(getContext(), ("上传图片失败：" + statuscode + errormsg));
                 }
 
                 @Override
@@ -260,44 +218,57 @@ public class AddShowNoteFragment extends Fragment {
                     mTvState.setVisibility(View.VISIBLE);
                 }
             });
-
         } else {
             ToastUtil.showToast(getContext(), "图片路径为空");
         }
-
     }
 
+    private void judgeAddFeedBack() {
+        String name = mEdRealName.getText().toString().trim();
+        String phone = mEdPhone.getText().toString().trim();
+        String content = mEtContent.getText().toString().trim();
 
-    //判断添加笔记
-    private void judgeAddNote() {
-
-        String content = mEtContent.getText().toString().trim();//内容
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.showToast(getContext(), "请输入个人真实姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showToast(getContext(), "手机号码不能为空");
+            return;
+        }
+        if (phone.length() != 11 || !phone.startsWith("1")) {
+            ToastUtil.showToast(getContext(), "请输入正确的手机号码");
+            return;
+        }
         if (TextUtils.isEmpty(content)) {
-            ToastUtil.showToast(getContext(), "内容不能为空");
+            ToastUtil.showToast(getContext(), "反馈内容不能为空");
             return;
         }
 
         if (BmobUser.isLogin()) {
-            ShowNote mShowNote = new ShowNote();
-            mShowNote.setContent(content);
-            mShowNote.setPicture(mFiles);
-            mShowNote.setSelfVisible(isVisable);
+            Feedback feedback=new Feedback();
+            feedback.setRealName(name);
+            feedback.setPhone(phone);
+            feedback.setContent(content);
+            feedback.setPicture(mFiles);
 
-            mShowNote.setAuthor(BeanUserBase.getCurrentUser(BeanUserBase.class));
-            mShowNote.save(new SaveListener<String>() {
+            feedback.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
                     if (e == null) {
-                        ToastUtil.showToast(getContext(), "添加成功");
-                        getActivity().onBackPressed();
+                        ToastUtil.showToast(getContext(), "添加反馈成功");
+                        getActivity().finish();
                     } else {
-                        ToastUtil.showToast(getContext(), "添加失败" + e.getErrorCode() + e.getMessage());
+                        ToastUtil.showToast(getContext(), "添加反馈失败" + e.getErrorCode() + e.getMessage());
                     }
                 }
             });
         } else {
             ToastUtil.showToast(getContext(), "请先登录账号");
         }
+
+
+
 
     }
 

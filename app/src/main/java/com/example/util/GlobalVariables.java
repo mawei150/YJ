@@ -19,6 +19,8 @@ public class GlobalVariables {
 
     public static final String USER_ROLE="yj_user_role";//用户角色  1.用户  2.管理员
 
+    public static final String USER_NICK_NAME="yj_user_nick_name";//用户昵称
+
     public static void setUsername(String username) {
 
         SharedPreferencesClass.putstring(BaseApplication.getContext(),USERNAME, username);
@@ -45,5 +47,12 @@ public class GlobalVariables {
         return SharedPreferencesClass.getInt(BaseApplication.getContext(),USER_ROLE,1);
     }
 
+    public static String getUserNickName() {
+        return SharedPreferencesClass.getstring(BaseApplication.getContext(),USER_NICK_NAME, "");
+    }
+
+    public static void setUserNickName(String nickName) {
+        SharedPreferencesClass.putstring(BaseApplication.getContext(),USER_NICK_NAME,  nickName);
+    }
 
 }

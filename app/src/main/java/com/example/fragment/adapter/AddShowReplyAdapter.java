@@ -31,6 +31,7 @@ public class AddShowReplyAdapter  extends BaseQuickAdapter<ShowNoteReply, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, ShowNoteReply item) {
+        helper.setGone(R.id.fl_reply,false);
         helper.setText(R.id.tv_content, item.getContent());
         helper.setText(R.id.tv_dateCrate, item.getCreatedAt());
         helper.setText(R.id.tv_displayName, item.getPost().getAuthor().getNickname());

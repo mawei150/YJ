@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_select_photo_ppwRoot"
     android:layout_width="match_parent"
-    android:layout_height="270dp"
+    android:layout_height="220dp"
     android:layout_gravity="bottom"
     android:background="#E0E0E0">
 
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#D0D1D3" />
-
+<!--
         <TextView
             android:id="@+id/tv_sound_record"
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:gravity="center"
             android:text="录音"
             android:textColor="#2C7ADC"
-            android:textSize="18sp" />
+            android:textSize="18sp" />-->
 
         <TextView
             android:id="@+id/tvSelectPhotoCancel"

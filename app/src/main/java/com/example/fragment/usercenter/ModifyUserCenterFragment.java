@@ -3,10 +3,12 @@ package com.example.fragment.usercenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -67,6 +69,8 @@ public class ModifyUserCenterFragment extends Fragment {
     LinearLayout mLiIncludeHeaderRight;
     @BindView(R.id.tv_includeHeaderTitle)
     TextView mTvIncludeHeaderTitle;
+    @BindView(R.id.ed_nickname)
+    EditText mEdNickname;
 
 
     public ModifyUserCenterFragment() {
@@ -113,6 +117,11 @@ public class ModifyUserCenterFragment extends Fragment {
                 if (e == null) {
                     if (userBase.getHeadimage() != null) {
                         Picasso.with(getContext()).load(userBase.getHeadimage()).into(mIvHead);
+                        if(! TextUtils.isEmpty(userBase.getNickname())){
+                            mEdNickname.setText(userBase.getNickname());
+                        }else{
+                            mEdNickname.setText("暂无昵称");
+                        }
                     }
                 } else {
                     ToastUtil.showToast(getContext(), "查询失败" + e.getMessage());
@@ -122,7 +131,7 @@ public class ModifyUserCenterFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_head})
+    @OnClick({R.id.iv_head,R.id.tv_includeHeaderRight,R.id.li_includeHeaderLeft})
     public void onClickView(View view) {
         switch (view.getId()) {
             case R.id.iv_head:
@@ -156,14 +165,23 @@ public class ModifyUserCenterFragment extends Fragment {
                                 .circleDimmedLayer(true)//是否圆形裁剪
                                 .compress(true)// 是否压缩 true or false
                                 .forResult(PictureConfig.CHOOSE_REQUEST);
-
                     }
                 });
                 imageDialog.show();
                 break;
+            case R.id.tv_includeHeaderRight://保存个人信息
+                submitNickName();
+                break;
+            case R.id.li_includeHeaderLeft://返回
+                getActivity().onBackPressed();
+                break;
             default:
                 break;
         }
+    }
+
+    //修改个人信息
+    private void submitNickName() {
     }
 
 
@@ -238,7 +256,7 @@ public class ModifyUserCenterFragment extends Fragment {
             public void done(BmobException e) {
                 if (e == null) {
                     Picasso.with(getContext()).load(userBase.getHeadimage()).into(mIvHead);
-                    BeanEventBus eventBus=new BeanEventBus(Constant.HEADPORTRAIT);
+                    BeanEventBus eventBus = new BeanEventBus(Constant.HEADPORTRAIT);
                     EventBus.getDefault().post(eventBus);
                 } else {
                     ToastUtil.showToast(getContext(), ("更新失败：" + e.getErrorCode() + e.getMessage()));

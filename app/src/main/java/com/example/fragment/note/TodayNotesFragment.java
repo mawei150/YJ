@@ -3,7 +3,6 @@ package com.example.fragment.note;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.PopupWindow;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.bean.BeanUserBase;
 import com.example.bean.note;
 import com.example.fragment.adapter.NoteCategoryDiapplayAdapter;
 import com.example.fragment.usercenter.UserCenterActivity;
@@ -29,7 +28,6 @@ import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
 import com.example.util.advanced.LongPressPopView;
 import com.example.util.advanced.NoteTypeDialog;
-import com.example.util.advanced.TipsDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -66,6 +64,10 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
     SwipeRefreshLayout mRefresh;
     @BindView(R.id.tv_includeHeaderTitle)
     TextView mTvIncludeHeaderTitle;
+    @BindView(R.id.iv_includeHeaderLeft)
+    ImageView mIvIncludeHeaderLeft;
+    @BindView(R.id.li_includeHeaderLeft)
+    LinearLayout mLiIncludeHeaderLeft;
 
     private int mAddNoteType;//1.文字 2.图片  3.视频   4.录音
     private NoteCategoryDiapplayAdapter mAdapter;
@@ -100,6 +102,7 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
     }
 
     private void initView() {
+        mIvIncludeHeaderLeft.setImageDrawable(getResources().getDrawable(R.drawable.ic_svg_onclick));
         mTvIncludeHeaderTitle.setText("今日笔记");
         mRefresh.setColorSchemeColors(getResources().getColor(R.color.mainColor));
         mRvList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -117,13 +120,13 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                note mNote=mAdapter.getItem(position);
-                if(mNote==null){
+                note mNote = mAdapter.getItem(position);
+                if (mNote == null) {
                     return;
                 }
                 Intent intent = new Intent();
                 intent.setClass(getContext(), UserCenterActivity.class);//换一种写法
-                intent.putExtra(note.class.getCanonicalName(),mNote);
+                intent.putExtra(note.class.getCanonicalName(), mNote);
                 intent.putExtra(Constant.FRAGMENT_ID, NoteDetailFragment.TAG);
                 startActivity(intent);
             }
@@ -169,7 +172,7 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
         });
     }
 
-    @OnClick({R.id.fb_add,R.id.li_includeHeaderLeft})
+    @OnClick({R.id.fb_add, R.id.li_includeHeaderLeft})
     public void onClickView(View view) {
         switch (view.getId()) {
             case R.id.fb_add:

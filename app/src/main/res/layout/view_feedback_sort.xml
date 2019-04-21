@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_gravity="right"
+    android:background="@drawable/my_bg_pop">
+
+    <TextView
+        android:id="@+id/tv_not_handle"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="未处理"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="100dp"
+        android:layout_height="1px"
+        android:layout_below="@+id/tv_not_handle"
+        android:layout_alignParentLeft="true"
+        android:background="#cbcbcb" />
+
+    <TextView
+        android:id="@+id/tv_begin_handle"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/line"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="开始处理"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_two_line"
+        android:layout_width="100dp"
+        android:layout_height="1px"
+        android:layout_below="@+id/tv_begin_handle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp"
+        android:background="#cbcbcb" />
+
+    <TextView
+        android:id="@+id/tv_end_handle"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/tv_two_line"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="结束处理"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+
+</RelativeLayout>

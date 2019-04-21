@@ -88,7 +88,7 @@
         <LinearLayout
             android:id="@+id/ll_user"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -126,7 +126,7 @@
         <LinearLayout
             android:id="@+id/ll_all_note"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -162,7 +162,7 @@
         <LinearLayout
             android:id="@+id/ll_take_notes"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -198,7 +198,7 @@
         <LinearLayout
             android:id="@+id/ll_de_gemeenschap"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -214,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="社区"
+                android:text="论坛"
                 android:textColor="@color/color1"
                 android:textSize="15sp" />
 
@@ -234,7 +234,7 @@
         <LinearLayout
             android:id="@+id/ll_notice"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -266,11 +266,82 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/color2" />
+        <LinearLayout
+            android:id="@+id/ll_setting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_svg_setting" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="系统设置"
+                android:textColor="@color/color1"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_svg_big_greater" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color2" />
+        <LinearLayout
+            android:id="@+id/ll_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_svg_feedback" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="意见反馈"
+                android:textColor="@color/color1"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_svg_big_greater" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color2" />
+
 
         <LinearLayout
             android:id="@+id/ll_logout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -297,6 +368,7 @@
                 android:src="@drawable/ic_svg_big_greater" />
 
         </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"

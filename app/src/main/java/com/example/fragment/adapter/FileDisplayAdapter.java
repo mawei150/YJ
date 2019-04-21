@@ -4,6 +4,7 @@ package com.example.fragment.adapter;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.main.R;
@@ -22,8 +23,9 @@ public class FileDisplayAdapter  extends BaseQuickAdapter<BmobFile,BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, BmobFile item) {
 
-        Picasso.with(mContext).load(item.getUrl()).into((ImageView) helper.getView(R.id.iv_content));
+       // Picasso.with(mContext).load(item.getUrl()).into((ImageView) helper.getView(R.id.iv_content));
 
+        Glide.with(mContext).load(item.getUrl()).into((ImageView) helper.getView(R.id.iv_content));
         helper.addOnClickListener(R.id.iv_delete);
     }
 }

@@ -52,6 +52,12 @@
         android:paddingRight="10dp"
         android:visibility="gone">
 
+        <ImageView
+            android:id="@+id/iv_includeHeaderRight"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_svg_there_point"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_includeHeaderRight"
@@ -60,8 +66,11 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="刷新"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

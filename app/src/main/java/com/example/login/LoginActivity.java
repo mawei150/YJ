@@ -135,6 +135,7 @@ public class LoginActivity extends Activity {
                     //ToastUtil.showToast(getApplicationContext(), object.get(0).getObjectId() + "");
                     GlobalVariables.setUsername(account);//存用户名
                     GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
+                    GlobalVariables.setUserNickName(object.get(0).getNickname());
                     if (object.get(0).getRole() == 2) {
                         GlobalVariables.setRole(2);
                     } else {

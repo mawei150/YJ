@@ -131,7 +131,7 @@ public class AddNoteFragment extends Fragment {
         }else {
             mLlResources.setVisibility(View.VISIBLE);
             mTvImgHint.setVisibility(View.VISIBLE);
-            mTvImgHint.setText("最多添加一个音视频");
+            mTvImgHint.setText("最多添加一个视频");
         }
             mRvUpload.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             mAdapter = new FileDisplayAdapter(R.layout.item_upload_view, mFiles);

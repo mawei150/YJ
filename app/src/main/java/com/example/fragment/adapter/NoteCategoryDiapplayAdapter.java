@@ -33,7 +33,6 @@ public class NoteCategoryDiapplayAdapter extends BaseQuickAdapter<note, BaseView
             helper.setText(R.id.tv_home_content, item.getNoteWords());
         }
 
-        //作业&考试
         if (item.getNoteType() == 1) {
             helper.setText(R.id.tv_home_type, "文字");
             helper.setBackgroundRes(R.id.tv_home_type, R.drawable.layer_message_home_bg);
