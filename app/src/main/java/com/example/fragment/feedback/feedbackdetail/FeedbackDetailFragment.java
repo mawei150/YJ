@@ -1,6 +1,7 @@
 package com.example.fragment.feedback.feedbackdetail;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.util.AppUtils;
 
 
 /**
@@ -129,17 +129,17 @@ public class FeedbackDetailFragment extends Fragment {
             Glide.with(getContext()).load(mFeedback.getPicture().get(0).getUrl())
                     .into(mIvFeedbacks);
         }
-
     }
 
-    @OnClick({R.id.li_includeHeaderLeft,R.id.li_includeHeaderRight})
+    @OnClick({R.id.li_includeHeaderLeft, R.id.li_includeHeaderRight})
     protected void onClickView(View view) {
         switch (view.getId()) {
             case R.id.li_includeHeaderLeft://返回
                 getActivity().onBackPressed();
                 break;
             case R.id.li_includeHeaderRight://点击右边  更改问题状态
-                FeedbackStatePopView feedbackStatePopView=new FeedbackStatePopView(getContext());
+                FeedbackStatePopView feedbackStatePopView = new FeedbackStatePopView(getContext());
+                feedbackStatePopView.setBackgroundDrawable(new ColorDrawable(0));
                 feedbackStatePopView.setFeedbackStatePopViewOnClickLister(new FeedbackStatePopView.FeedbackStatePopViewOnClickLister() {
                     @Override
                     public void NotHandle() {//更改状态  未处理
@@ -151,12 +151,12 @@ public class FeedbackDetailFragment extends Fragment {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
-                                    ToastUtil.showToast(getContext(),"修改成功");
+                                    ToastUtil.showToast(getContext(), "修改成功");
                                     mTvHandle.setText("处理人: 暂无");
                                     mTvState.setText("处理状态: 暂未处理");
                                     feedbackStatePopView.dismiss();
                                 } else {
-                                    ToastUtil.showToast(getContext(),"更改状态成功");
+                                    ToastUtil.showToast(getContext(), "更改状态成功");
                                 }
                             }
                         });
@@ -171,16 +171,17 @@ public class FeedbackDetailFragment extends Fragment {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
-                                    ToastUtil.showToast(getContext(),"修改成功");
+                                    ToastUtil.showToast(getContext(), "修改成功");
                                     mTvHandle.setText("处理人:" + GlobalVariables.getUserNickName());
                                     mTvState.setText("处理状态: 正在处理");
                                     feedbackStatePopView.dismiss();
                                 } else {
-                                    ToastUtil.showToast(getContext(),"更改状态成功");
+                                    ToastUtil.showToast(getContext(), "更改状态成功");
                                 }
                             }
                         });
                     }
+
                     @Override
                     public void EndHandle() {//更改状态    结束处理
                         Feedback feedback = new Feedback();
@@ -190,19 +191,19 @@ public class FeedbackDetailFragment extends Fragment {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
-                                    ToastUtil.showToast(getContext(),"修改成功");
+                                    ToastUtil.showToast(getContext(), "修改成功");
                                     mTvHandle.setText("处理人:" + GlobalVariables.getUserNickName());
                                     mTvState.setText("处理状态: 已处理");
                                     feedbackStatePopView.dismiss();
                                 } else {
-                                    ToastUtil.showToast(getContext(),"更改状态成功");
+                                    ToastUtil.showToast(getContext(), "更改状态成功");
                                 }
                             }
                         });
                     }
                 });
                 //feedbackStatePopView.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.RIGHT+Gravity.TOP,0,0);
-                feedbackStatePopView.showAsDropDown(getActivity().getWindow().findViewById(R.id.li_includeHeaderRight), 20, 20);
+                feedbackStatePopView.showAsDropDown(getActivity().getWindow().findViewById(R.id.li_includeHeaderRight), 10, 10);
                 break;
             default:
                 break;

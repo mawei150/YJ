@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_svg_there_point" />
-                            <entry key="sourceFile" value="D:\易记App图标\三个点 (2).svg" />
+                            <entry key="outputName" value="ic_svg_note_search" />
+                            <entry key="sourceFile" value="D:\易记App图标\搜索.svg" />
                           </map>
                         </option>
                       </PersistentState>

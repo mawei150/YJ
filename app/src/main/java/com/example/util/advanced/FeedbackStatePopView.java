@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.example.main.R;
 
 public class FeedbackStatePopView extends PopupWindow implements View.OnClickListener {
@@ -30,7 +29,7 @@ public class FeedbackStatePopView extends PopupWindow implements View.OnClickLis
 
     public FeedbackStatePopView(Context context) {
         super(context);
-        this.mContext=context;
+        this.mContext = context;
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mView = layoutInflater.inflate(R.layout.view_feedback_sort, null);
         setContentView(mView);

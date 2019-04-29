@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="right"
-    android:background="@drawable/my_bg_pop">
+    android:background="@drawable/my_bg_pop"
+   >
 
     <TextView
         android:id="@+id/tv_not_handle"
         android:layout_width="100dp"
         android:layout_height="35dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:text="未处理"
+        android:background="#DCDCDC"
         android:textColor="#333333"
         android:textSize="14sp" />
 
@@ -32,6 +34,7 @@
         android:layout_alignParentLeft="true"
         android:gravity="center"
         android:text="开始处理"
+        android:background="#DCDCDC"
         android:textColor="#333333"
         android:textSize="14sp" />
 
@@ -52,6 +55,7 @@
         android:layout_alignParentLeft="true"
         android:gravity="center"
         android:text="结束处理"
+        android:background="#DCDCDC"
         android:textColor="#333333"
         android:textSize="14sp" />
 

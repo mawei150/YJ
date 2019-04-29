@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,14 @@ import com.example.fragment.feedback.feedbacklist.FeedbackListFragment;
 import com.example.fragment.note.TodayNotesFragment;
 import com.example.fragment.notice.NoticeActivity;
 import com.example.fragment.notice.noticelist.NoticeListFragment;
+import com.example.fragment.seting.SetActivity;
+import com.example.fragment.seting.setlist.SetListFragment;
 import com.example.fragment.shownote.ShowNoteActivity;
-import com.example.fragment.shownote.addshow.AddShowNoteFragment;
 import com.example.fragment.shownote.show.ShowNoteFragment;
 import com.example.fragment.usercenter.ModifyUserCenterFragment;
 import com.example.fragment.usercenter.UserCenterActivity;
+import com.example.fragment.usermanage.UserManageActivity;
+import com.example.fragment.usermanage.userlist.UserListFragment;
 import com.example.login.LoginActivity;
 import com.example.main.R;
 import com.example.util.Constant;
@@ -76,6 +80,8 @@ public class MainFragment extends Fragment {
     LinearLayout mLlLogout;
     @BindView(R.id.ll_feedback)
     LinearLayout mLlFeedback;
+    @BindView(R.id.ll_setting)
+    LinearLayout mLlSetting;
 
 
     private DrawerLayout drawer_layout;
@@ -126,7 +132,7 @@ public class MainFragment extends Fragment {
 
 
     @OnClick({R.id.iv_head, R.id.cl_personal_data, R.id.ll_take_notes, R.id.ll_all_note, R.id.ll_de_gemeenschap, R.id.ll_notice,
-            R.id.ll_logout, R.id.ll_feedback})
+            R.id.ll_logout, R.id.ll_feedback, R.id.ll_user,R.id.ll_setting})
     public void onClickView(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -165,10 +171,20 @@ public class MainFragment extends Fragment {
                 intent = new Intent(getContext(), FeedbackActivity.class);
                 //如果是管理员  跳用户反馈列表  如果是用户  跳添加反馈界面
                 if (GlobalVariables.getRole() == 2) {//管理员
-                     intent.putExtra(Constant.FRAGMENT_ID, FeedbackListFragment.TAG);
+                    intent.putExtra(Constant.FRAGMENT_ID, FeedbackListFragment.TAG);
                 } else {
                     intent.putExtra(Constant.FRAGMENT_ID, AddFeedbackFragment.TAG);
                 }
+                startActivity(intent);
+                break;
+            case R.id.ll_user://用户管理
+                intent = new Intent(getContext(), UserManageActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, UserListFragment.TAG);
+                startActivity(intent);
+                break;
+            case R.id.ll_setting://设置
+                intent=new Intent(getContext(), SetActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, SetListFragment.TAG);
                 startActivity(intent);
                 break;
             default:
@@ -188,7 +204,11 @@ public class MainFragment extends Fragment {
             @Override
             public void done(BeanUserBase userBase, BmobException e) {
                 if (e == null) {
-                    mTvNickName.setText("测试用户");
+                    if (TextUtils.isEmpty(GlobalVariables.getUserNickName())) {
+                        mTvNickName.setText("暂无昵称");
+                    } else {
+                        mTvNickName.setText(GlobalVariables.getUserNickName());
+                    }
                     if (userBase.getHeadimage() != null) {
                         /*File mFile = userBase.getImgage();
                         Bitmap bitmap = BitmapFactory.decodeFile(mFile.toString());//将文件路径解码为位图

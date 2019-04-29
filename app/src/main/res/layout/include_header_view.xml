@@ -54,8 +54,8 @@
 
         <ImageView
             android:id="@+id/iv_includeHeaderRight"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/ic_svg_there_point"
             android:visibility="gone" />
 

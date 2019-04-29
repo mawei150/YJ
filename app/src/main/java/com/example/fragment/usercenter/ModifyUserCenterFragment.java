@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,20 +59,23 @@ public class ModifyUserCenterFragment extends Fragment {
 
     @BindView(R.id.iv_head)
     CircleImageView mIvHead;
-    @BindView(R.id.li_includeHeaderLeft)
-    LinearLayout mLiIncludeHeaderLeft;
-    @BindView(R.id.tv_includeHeaderRight)
-    TextView mTvIncludeHeaderRight;
     @BindView(R.id.tv_alter_head)
     TextView mTvAlterHead;
-    Unbinder unbinder;
     @BindView(R.id.li_includeHeaderRight)
     LinearLayout mLiIncludeHeaderRight;
     @BindView(R.id.tv_includeHeaderTitle)
     TextView mTvIncludeHeaderTitle;
     @BindView(R.id.ed_nickname)
     EditText mEdNickname;
-
+    @BindView(R.id.tv_user_identity)
+    TextView mTvUserIdentity;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
+    @BindView(R.id.tv_username)
+    TextView mTvUsername;
+    @BindView(R.id.btn_confirm)
+    Button mBtnConfirm;
+    Unbinder unbinder;
 
     public ModifyUserCenterFragment() {
         // Required empty public constructor
@@ -106,9 +110,7 @@ public class ModifyUserCenterFragment extends Fragment {
 
     //页面初始化
     private void initView() {
-        mLiIncludeHeaderRight.setVisibility(View.VISIBLE);
         mTvIncludeHeaderTitle.setText("修改个人信息");
-        mTvIncludeHeaderRight.setText("保存");
 
         BmobQuery<BeanUserBase> userQuery = new BmobQuery<>();
         userQuery.getObject(GlobalVariables.getUserObjectId(), new QueryListener<BeanUserBase>() {
@@ -117,11 +119,18 @@ public class ModifyUserCenterFragment extends Fragment {
                 if (e == null) {
                     if (userBase.getHeadimage() != null) {
                         Picasso.with(getContext()).load(userBase.getHeadimage()).into(mIvHead);
-                        if(! TextUtils.isEmpty(userBase.getNickname())){
+                        if (!TextUtils.isEmpty(userBase.getNickname())) {//用户昵称
                             mEdNickname.setText(userBase.getNickname());
-                        }else{
+                        } else {
                             mEdNickname.setText("暂无昵称");
                         }
+                        if(GlobalVariables.getRole()==2){//管理员
+                            mTvUserIdentity.setText("管理员");
+                        }else{//普通用户
+                            mTvUserIdentity.setText("普通用户");
+                        }
+                        mTvUsername.setText(GlobalVariables.getUsername());
+                        mTvPhone.setText(userBase.getMobilePhoneNumber());
                     }
                 } else {
                     ToastUtil.showToast(getContext(), "查询失败" + e.getMessage());
@@ -131,7 +140,7 @@ public class ModifyUserCenterFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.iv_head,R.id.tv_includeHeaderRight,R.id.li_includeHeaderLeft})
+    @OnClick({R.id.iv_head, R.id.btn_confirm, R.id.li_includeHeaderLeft})
     public void onClickView(View view) {
         switch (view.getId()) {
             case R.id.iv_head:
@@ -169,7 +178,7 @@ public class ModifyUserCenterFragment extends Fragment {
                 });
                 imageDialog.show();
                 break;
-            case R.id.tv_includeHeaderRight://保存个人信息
+            case R.id.btn_confirm://保存个人信息
                 submitNickName();
                 break;
             case R.id.li_includeHeaderLeft://返回
@@ -182,6 +191,27 @@ public class ModifyUserCenterFragment extends Fragment {
 
     //修改个人信息
     private void submitNickName() {
+              String nickName=mEdNickname.getText().toString().trim();//个人昵称
+
+              if(TextUtils.isEmpty(nickName)){
+                  ToastUtil.showToast(getContext(),"个人昵称不能为空");
+              }
+
+        final BeanUserBase userBase = new BeanUserBase();
+        userBase.setNickname(nickName);
+        userBase.update(GlobalVariables.getUserObjectId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    ToastUtil.showToast(getContext(), ("更新成功"));
+                    GlobalVariables.setUserNickName(nickName);
+                    BeanEventBus eventBus = new BeanEventBus(Constant.HEADPORTRAIT);
+                    EventBus.getDefault().post(eventBus);
+                } else {
+                    ToastUtil.showToast(getContext(), ("更新失败：" + e.getErrorCode() + e.getMessage()));
+                }
+            }
+        });
     }
 
 
@@ -270,6 +300,5 @@ public class ModifyUserCenterFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
     }
 }

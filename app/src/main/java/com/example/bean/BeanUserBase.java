@@ -1,6 +1,5 @@
 package com.example.bean;
 
-import java.io.File;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;

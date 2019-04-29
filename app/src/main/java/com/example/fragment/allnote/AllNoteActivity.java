@@ -1,19 +1,22 @@
 package com.example.fragment.allnote;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.fragment.adapter.FixPagerAdapter;
 import com.example.fragment.allnote.notelist.NoteListFragment;
-import com.example.fragment.note.NoteDetailFragment;
-import com.example.fragment.note.TodayNotesFragment;
+import com.example.fragment.allnote.searchnote.SearchNoteListFragment;
+import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
+import com.example.util.Constant;
 import com.example.util.TabLayoutUtil;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.util.V;
 
 public class AllNoteActivity extends AppCompatActivity {
 
@@ -35,6 +39,10 @@ public class AllNoteActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @BindView(R.id.fragment_view_pager)
     ViewPager mViewPager;
+    @BindView(R.id.iv_includeHeaderRight)
+    ImageView mIvIncludeHeaderRight;
+    @BindView(R.id.li_includeHeaderRight)
+    LinearLayout mLiIncludeHeaderRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,10 @@ public class AllNoteActivity extends AppCompatActivity {
 
     private void initView() {
         mTvIncludeHeaderTitle.setText("所有笔记");
+        mLiIncludeHeaderRight.setVisibility(View.VISIBLE);
+        mIvIncludeHeaderRight.setVisibility(View.VISIBLE);
+        mIvIncludeHeaderRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_svg_note_search));
+
         String[] titles = {"文字", "图片", "视频"};
         FixPagerAdapter pagerAdapter = new FixPagerAdapter(getSupportFragmentManager());
         List<Fragment> fragmentList = new ArrayList<>(titles.length);
@@ -71,15 +83,18 @@ public class AllNoteActivity extends AppCompatActivity {
 
         mViewPager.setCurrentItem(0);
 
-
     }
 
-    @OnClick({R.id.li_includeHeaderLeft})
+    @OnClick({R.id.li_includeHeaderLeft,R.id.li_includeHeaderRight})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.li_includeHeaderLeft:
+            case R.id.li_includeHeaderLeft://返回按钮
                 onBackPressed();
                 break;
+            case R.id.li_includeHeaderRight://搜索按钮
+                Intent intent=new Intent(getApplicationContext(), UserCenterActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, SearchNoteListFragment.TAG);
+                startActivity(intent);
             default:
                 break;
         }

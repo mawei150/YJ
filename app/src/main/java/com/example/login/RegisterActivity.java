@@ -116,7 +116,6 @@ public class RegisterActivity extends Activity {
             //设置额外信息：此处为年龄
             /* user.setAge(18);*/
             user.signOrLogin(code, new SaveListener<BeanUserBase>() {
-
                 @Override
                 public void done(BeanUserBase user, BmobException e) {
                     if (e == null) {

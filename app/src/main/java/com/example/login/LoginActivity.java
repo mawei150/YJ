@@ -126,6 +126,7 @@ public class LoginActivity extends Activity {
     //查个人信息
     private void checkPersonalInformation() {
         final String account = mEdUserName.getText().toString().trim();//用户名
+        String password=mEdPassword.getText().toString().trim();//用户密码
         BmobQuery<BeanUserBase> userBmobQuery = new BmobQuery<>();
         userBmobQuery.addWhereEqualTo("username", account);
         userBmobQuery.setLimit(1).findObjects(new FindListener<BeanUserBase>() {
@@ -135,7 +136,11 @@ public class LoginActivity extends Activity {
                     //ToastUtil.showToast(getApplicationContext(), object.get(0).getObjectId() + "");
                     GlobalVariables.setUsername(account);//存用户名
                     GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
-                    GlobalVariables.setUserNickName(object.get(0).getNickname());
+                    GlobalVariables.setUserNickName(object.get(0).getNickname());//用户昵称
+                    GlobalVariables.setUserPassword(password);//密码
+                    if(!TextUtils.isEmpty(object.get(0).getMobilePhoneNumber())){
+                        GlobalVariables.setUserPhone(object.get(0).getMobilePhoneNumber());
+                    }
                     if (object.get(0).getRole() == 2) {
                         GlobalVariables.setRole(2);
                     } else {

@@ -18,7 +18,9 @@ public class note extends BmobObject implements Serializable {
 
     private String noteTitle;//笔记标题
     private String noteWords;//文字笔记
-    private int noteType;//笔记类型
+
+    private Integer noteType;//笔记类型
+
     private List<BmobFile> notePicture;//图片笔记
 
     private BeanUserBase author;
@@ -41,11 +43,11 @@ public class note extends BmobObject implements Serializable {
         this.noteWords = noteWord;
     }
 
-    public int getNoteType() {
+    public Integer getNoteType() {
         return noteType;
     }
 
-    public void setNoteType(int noteType) {
+    public void setNoteType(Integer noteType) {
         this.noteType = noteType;
     }
 

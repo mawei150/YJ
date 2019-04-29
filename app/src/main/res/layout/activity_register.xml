@@ -147,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ed_repeat_password" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/tv_phone_word"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="48dp"
@@ -169,12 +169,12 @@
         android:hint="请输入手机号码"
         android:inputType="phone"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_phone_word"
+        app:layout_constraintStart_toEndOf="@+id/tv_phone_word"
+        app:layout_constraintTop_toTopOf="@+id/tv_phone_word" />
 
     <View
-        android:id="@+id/view6"
+        android:id="@+id/view_line_one"
         android:layout_width="250dp"
         android:layout_height="2px"
         android:layout_marginTop="4dp"
@@ -183,18 +183,18 @@
         app:layout_constraintTop_toBottomOf="@+id/ed_tel" />
 
     <View
-        android:id="@+id/view7"
+        android:id="@+id/view_line_two"
         android:layout_width="250dp"
         android:layout_height="2px"
         android:background="@color/color2"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintStart_toEndOf="@+id/tv_code"
+        app:layout_constraintTop_toBottomOf="@+id/tv_code" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/tv_code"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="48dp"
@@ -202,7 +202,7 @@
         android:layout_marginTop="36dp"
         android:src="@drawable/ic_svg_message_code"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6" />
+        app:layout_constraintTop_toBottomOf="@+id/view_line_one" />
 
     <EditText
         android:id="@+id/ed_message"
@@ -216,9 +216,9 @@
         android:ems="10"
         android:hint="验证码"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_code"
+        app:layout_constraintStart_toEndOf="@+id/tv_code"
+        app:layout_constraintTop_toTopOf="@+id/tv_code" />
 
     <TextView
         android:id="@+id/tv_message_code"
@@ -251,7 +251,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view7" />
+        app:layout_constraintTop_toBottomOf="@+id/view_line_two" />
 
     <ImageView
         android:id="@+id/imageView8"
