@@ -25,6 +25,7 @@ import com.example.bean.ShowNote;
 import com.example.bean.note;
 import com.example.fragment.adapter.FileDisplayAdapter;
 import com.example.main.R;
+import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -264,12 +265,15 @@ public class AddShowNoteFragment extends Fragment {
         } else {
             ToastUtil.showToast(getContext(), "图片路径为空");
         }
-
     }
 
 
-    //判断添加笔记
+    //判断添加个人分享
     private void judgeAddNote() {
+        if(GlobalVariables.getRole() ==1 && GlobalVariables.getUserPower()==3){
+                    ToastUtil.showToast(getContext(),"您已被禁止发帖，请联系管理员解禁");
+                    return;
+        }
 
         String content = mEtContent.getText().toString().trim();//内容
         if (TextUtils.isEmpty(content)) {

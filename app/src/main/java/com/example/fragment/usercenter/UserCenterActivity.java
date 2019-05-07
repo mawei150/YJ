@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.bean.note;
+import com.example.fragment.MainFragment;
 import com.example.fragment.allnote.searchnote.SearchNoteListFragment;
 import com.example.fragment.note.AddNoteFragment;
 import com.example.fragment.note.NoteDetailFragment;
 import com.example.fragment.note.TodayNotesFragment;
+import com.example.login.password.ResetPasswordFragment;
 import com.example.main.R;
 import com.example.util.Constant;
 
@@ -66,6 +68,12 @@ public class UserCenterActivity extends AppCompatActivity {
                 break;
             case SearchNoteListFragment.TAG://查找笔记
                 mFragment=SearchNoteListFragment.newInstance();
+                break;
+            case ResetPasswordFragment.TAG://重置密码
+                mFragment=ResetPasswordFragment.newInstance();
+                break;
+            case MainFragment.TAG://主Fragment
+                mFragment=MainFragment.newInstance();
                 break;
                 default:
                     break;

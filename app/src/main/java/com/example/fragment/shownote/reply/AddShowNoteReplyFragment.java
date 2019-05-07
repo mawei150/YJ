@@ -161,8 +161,6 @@ public class AddShowNoteReplyFragment extends Fragment {
                                 }
                             }
                         });
-
-
                         break;
                     default:
                         break;
@@ -232,6 +230,10 @@ public class AddShowNoteReplyFragment extends Fragment {
 
     //发送消息
     private void Send() {
+        if(GlobalVariables.getRole() ==1 && GlobalVariables.getUserPower()==3){
+            ToastUtil.showToast(getContext(),"您已被禁止评论，请联系管理员解禁");
+            return;
+        }
         String content = mEtContent.getText().toString().trim();
         if (TextUtils.isEmpty(content)) {
             ToastUtil.showToast(getContext(), "发送信息不能为空");

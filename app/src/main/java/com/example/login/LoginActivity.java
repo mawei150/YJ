@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,8 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.bean.BeanUserBase;
+import com.example.fragment.note.TodayNotesFragment;
+import com.example.fragment.seting.SetActivity;
+import com.example.fragment.usercenter.UserCenterActivity;
+import com.example.login.password.ResetPasswordFragment;
 import com.example.main.MainActivity;
 import com.example.main.R;
+import com.example.util.Constant;
 import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
 
@@ -26,7 +30,6 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -48,14 +51,14 @@ public class LoginActivity extends Activity {
     TextView mTvRegister;
     @BindView(R.id.checkBox)
     CheckBox mCheckBox;
+    @BindView(R.id.tv_reset_password)
+    TextView mTvResetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-
         initView();//页面初始化
     }
 
@@ -74,7 +77,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    @OnClick({R.id.bt_login, R.id.tv_register})
+    @OnClick({R.id.bt_login, R.id.tv_register,R.id.tv_reset_password})
     protected void onClickView(View view) {
         switch (view.getId()) {
             case R.id.bt_login://登录
@@ -82,6 +85,11 @@ public class LoginActivity extends Activity {
                 break;
             case R.id.tv_register://注册
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                break;
+            case R.id.tv_reset_password://忘记密码
+                Intent intent=new Intent(LoginActivity.this, UserCenterActivity.class);
+                intent.putExtra(Constant.FRAGMENT_ID, ResetPasswordFragment.TAG);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -112,7 +120,6 @@ public class LoginActivity extends Activity {
             @Override
             public void done(BeanUserBase beanUserBase, BmobException e) {
                 if (e == null) {
-                    ToastUtil.showToast(getApplicationContext(), "登录成功");
                     //GlobalVariables.setUsername(account);
                     checkPersonalInformation();
                 } else {
@@ -126,7 +133,7 @@ public class LoginActivity extends Activity {
     //查个人信息
     private void checkPersonalInformation() {
         final String account = mEdUserName.getText().toString().trim();//用户名
-        String password=mEdPassword.getText().toString().trim();//用户密码
+        String password = mEdPassword.getText().toString().trim();//用户密码
         BmobQuery<BeanUserBase> userBmobQuery = new BmobQuery<>();
         userBmobQuery.addWhereEqualTo("username", account);
         userBmobQuery.setLimit(1).findObjects(new FindListener<BeanUserBase>() {
@@ -134,26 +141,31 @@ public class LoginActivity extends Activity {
             public void done(List<BeanUserBase> object, BmobException e) {
                 if (e == null) {
                     //ToastUtil.showToast(getApplicationContext(), object.get(0).getObjectId() + "");
-                    GlobalVariables.setUsername(account);//存用户名
-                    GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
-                    GlobalVariables.setUserNickName(object.get(0).getNickname());//用户昵称
-                    GlobalVariables.setUserPassword(password);//密码
-                    if(!TextUtils.isEmpty(object.get(0).getMobilePhoneNumber())){
-                        GlobalVariables.setUserPhone(object.get(0).getMobilePhoneNumber());
+                    if(object.get(0).getPower() !=2 ) {
+                        ToastUtil.showToast(getApplicationContext(), "登录成功");
+                        GlobalVariables.setUsername(account);//存用户名
+                        GlobalVariables.setUserObjectId(object.get(0).getObjectId());//存ObjectId
+                        GlobalVariables.setUserNickName(object.get(0).getNickname());//用户昵称
+                        GlobalVariables.setUserPower(object.get(0).getPower());
+                        GlobalVariables.setUserPassword(password);//密码
+                        if (!TextUtils.isEmpty(object.get(0).getMobilePhoneNumber()) && object.get(0).getMobilePhoneNumberVerified()) {
+                            GlobalVariables.setUserPhone(object.get(0).getMobilePhoneNumber());
+                        } else {
+                            GlobalVariables.setUserPhone("");
+                        }
+                        if (object.get(0).getRole() == 2) {
+                            GlobalVariables.setRole(2);
+                        } else {
+                            GlobalVariables.setRole(1);
+                        }
+                        //跳主页面
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }else{//拉黑人员
+                        ToastUtil.showToast(getApplicationContext(), "你已被禁止登陆，请联系管理员解禁");
                     }
-                    if (object.get(0).getRole() == 2) {
-                        GlobalVariables.setRole(2);
-                    } else {
-                        GlobalVariables.setRole(1);
-                    }
-                    //跳主页面
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-
                 } else {
-
                     ToastUtil.showToast(getApplicationContext(), "失败" + e.getMessage());
-
                 }
             }
         });

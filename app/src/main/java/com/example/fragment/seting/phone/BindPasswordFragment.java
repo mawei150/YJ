@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -177,7 +178,7 @@ public class BindPasswordFragment extends Fragment {
             mEdTel.setError("请输入正确的手机号码");
             return;
         }
-        if (!mPhone.equals(GlobalVariables.getUserPhone())) {
+        if (!mPhone.equals(GlobalVariables.getUserPhone()) &&  mPhoneState==1) {
             mEdTel.setError("手机号码与已绑定手机号码不同");
             return;
         }
@@ -185,16 +186,17 @@ public class BindPasswordFragment extends Fragment {
             mEdMessage.setError("验证码不能为空");
             return;
         }
-        //在满足条件后  开始进行解绑
+        //在满足条件后  开始进行解绑&绑定
         BmobSMS.verifySmsCode(mPhone, code, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     BeanUserBase user = BmobUser.getCurrentUser(BeanUserBase.class);
-                    user.setMobilePhoneNumber(mPhone);
                     if(mPhoneState==1){//解绑
+                        //user.setMobilePhoneNumber("");
                         user.setMobilePhoneNumberVerified(false);
                     }else{//否则为绑定
+                        user.setMobilePhoneNumber(mPhone);
                         user.setMobilePhoneNumberVerified(true);
                     }
                     user.update(new UpdateListener() {
@@ -209,12 +211,18 @@ public class BindPasswordFragment extends Fragment {
                                     ToastUtil.showToast(getContext(), "手机号绑定成功");
                                     GlobalVariables.setUserPhone(mPhone);
                                 }
-                                getActivity().finish();
+                                //getActivity().finish();
                                 Intent intent=new Intent(getContext(), SetActivity.class);
                                 intent.putExtra(Constant.FRAGMENT_ID, SetListFragment.TAG);
                                 startActivity(intent);//跳到设置首页面
                             } else {
-                                ToastUtil.showToast(getContext(), "手机号解绑失败");
+                                if(mPhoneState==1) {//解绑
+                                    ToastUtil.showToast(getContext(), "手机号解绑失败"+e.getErrorCode()+e.getMessage());
+                                    Log.d("1111","手机号解绑失败"+e.getErrorCode()+e.getMessage());
+                                }else{
+                                    ToastUtil.showToast(getContext(), "手机号绑定失败"+e.getErrorCode()+e.getMessage());
+                                    Log.d("1111","手机号绑定失败"+e.getErrorCode()+e.getMessage());
+                                }
                             }
                         }
                     });
@@ -223,7 +231,6 @@ public class BindPasswordFragment extends Fragment {
                 }
             }
         });
-
 
     }
 
@@ -262,7 +269,7 @@ public class BindPasswordFragment extends Fragment {
                         mIsChecked = true;
                     }
                     mTvMessageCode.setEnabled(true);
-                    mTvMessageCode.setText("重新获取验证码");
+                    mTvMessageCode.setText("重新获取");
                 }
             }.start();
         }
@@ -274,7 +281,7 @@ public class BindPasswordFragment extends Fragment {
             mEdTel.setError("请输入正确的手机号码");
             return false;
         }
-        if (!mPhone.equals(GlobalVariables.getUserPhone())) {
+        if (!mPhone.equals(GlobalVariables.getUserPhone()) && mPhoneState==1) {
             mEdTel.setError("手机号码与已绑定手机号码不同");
             return false;
         }

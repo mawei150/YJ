@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bean.BeanUserBase;
 import com.example.main.R;
 import com.example.util.Constant;
@@ -111,26 +112,34 @@ public class ModifyUserCenterFragment extends Fragment {
     //页面初始化
     private void initView() {
         mTvIncludeHeaderTitle.setText("修改个人信息");
+        if(GlobalVariables.getRole()==2){//管理员
+            mTvUserIdentity.setText("管理员");
+        }else{//普通用户
+            mTvUserIdentity.setText("普通用户");
+        }
+        mTvUsername.setText(GlobalVariables.getUsername());//用户名
+        if (!TextUtils.isEmpty(GlobalVariables.getUserPhone())) {
+            mTvPhone.setText(GlobalVariables.getUserPhone());
+        } else {
+            mTvPhone.setText("暂未绑定手机号");
+        }
+
 
         BmobQuery<BeanUserBase> userQuery = new BmobQuery<>();
         userQuery.getObject(GlobalVariables.getUserObjectId(), new QueryListener<BeanUserBase>() {
             @Override
             public void done(BeanUserBase userBase, BmobException e) {
                 if (e == null) {
+                    if (TextUtils.isEmpty(GlobalVariables.getUserNickName())) {
+                        mEdNickname.setText("暂无昵称");
+                    } else {
+                        mEdNickname.setText(GlobalVariables.getUserNickName());
+                    }
                     if (userBase.getHeadimage() != null) {
+                        /*File mFile = userBase.getImgage();
+                        Bitmap bitmap = BitmapFactory.decodeFile(mFile.toString());//将文件路径解码为位图
+                        mIvHead.setImageBitmap(bitmap);*/
                         Picasso.with(getContext()).load(userBase.getHeadimage()).into(mIvHead);
-                        if (!TextUtils.isEmpty(userBase.getNickname())) {//用户昵称
-                            mEdNickname.setText(userBase.getNickname());
-                        } else {
-                            mEdNickname.setText("暂无昵称");
-                        }
-                        if(GlobalVariables.getRole()==2){//管理员
-                            mTvUserIdentity.setText("管理员");
-                        }else{//普通用户
-                            mTvUserIdentity.setText("普通用户");
-                        }
-                        mTvUsername.setText(GlobalVariables.getUsername());
-                        mTvPhone.setText(userBase.getMobilePhoneNumber());
                     }
                 } else {
                     ToastUtil.showToast(getContext(), "查询失败" + e.getMessage());
@@ -150,7 +159,6 @@ public class ModifyUserCenterFragment extends Fragment {
                     public void OnCancelLister() {//取消
                         imageDialog.dismiss();
                     }
-
                     @Override
                     public void OnSelectCameraLister() {//拍照
                         imageDialog.dismiss();

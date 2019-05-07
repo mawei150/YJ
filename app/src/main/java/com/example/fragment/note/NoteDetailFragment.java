@@ -27,11 +27,15 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.application.BaseApplication;
+import com.example.bean.ShowNote;
 import com.example.bean.note;
 import com.example.fragment.adapter.PictureDisplayAdapter;
 import com.example.fragment.usercenter.UserCenterActivity;
 import com.example.main.R;
 import com.example.util.ToastUtil;
+import com.example.util.advanced.ShootImageDialog;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -173,7 +177,7 @@ public class NoteDetailFragment extends Fragment {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                             //PictureSelector.create(NoteDetailFragment.this).themeStyle(1).openExternalPreview(position, (List<LocalMedia>) mAdapter.getItem(position));
-                            ImageView photoView = view.findViewById(R.id.iv_picture);
+                          /*  ImageView photoView = view.findViewById(R.id.iv_picture);
                             PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
 
                             Glide.with(BaseApplication.getContext()).load(mAdapter.getItem(position).getUrl()).apply(new RequestOptions().override(800, 800))
@@ -183,7 +187,10 @@ public class NoteDetailFragment extends Fragment {
                                             photoView.setImageDrawable(resource);
                                             attacher.update();
                                         }
-                                    });
+                                    });*/
+                            ShootImageDialog shootImageDialog=new ShootImageDialog(getContext());
+                            shootImageDialog.show();
+                            shootImageDialog.setImageUrl(Objects.requireNonNull(mAdapter.getItem(position)).getUrl());
                         }
                     });
                 }

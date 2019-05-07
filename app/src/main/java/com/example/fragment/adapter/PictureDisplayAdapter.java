@@ -41,9 +41,6 @@ public class PictureDisplayAdapter extends BaseQuickAdapter<BmobFile, BaseViewHo
                     }
                 });*/
 
-
-
-
          Glide.with(BaseApplication.getContext())
                 .applyDefaultRequestOptions(new RequestOptions().error(R.drawable.default_coursecover)
                         .placeholder(R.drawable.default_coursecover))

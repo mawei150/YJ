@@ -25,6 +25,16 @@ public class GlobalVariables {
 
     public static final String USER_PHONE="yj_user_phone";//用户电话
 
+    public static final String USER_POWER="yj_user_power";//用户权限
+
+    public static void setUserPower(int power) {
+        SharedPreferencesClass.putInt(BaseApplication.getContext(),USER_POWER,power);
+    }
+
+    public static int getUserPower() {
+        return SharedPreferencesClass.getInt(BaseApplication.getContext(),USER_POWER, 1);
+    }
+
 
     public static void setUserPhone(String phone) {
         SharedPreferencesClass.putstring(BaseApplication.getContext(),USER_PHONE,phone);

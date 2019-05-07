@@ -41,6 +41,8 @@ public class BeanUserBase extends BmobUser  {
     private  int  role;//角色  1:用户  2:管理员
     private  String  nickname;//用户昵称
     private  String  headimage;
+    private  Integer  power;//1.正常  2.禁止登陆  3.禁止发帖
+
 
     public boolean isSex() {
         return sex;
@@ -88,5 +90,13 @@ public class BeanUserBase extends BmobUser  {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Integer getPower() {
+        return power;
+    }
+
+    public void setPower(Integer power) {
+        this.power = power;
     }
 }

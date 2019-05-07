@@ -16,6 +16,7 @@ import com.example.fragment.seting.phone.BindPasswordFragment;
 import com.example.main.R;
 import com.example.util.Constant;
 import com.example.util.GlobalVariables;
+import com.example.util.advanced.APKVersionCodeUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +42,8 @@ public class SetListFragment extends Fragment {
     @BindView(R.id.tv_password)
     TextView mTvPassword;
     Unbinder unbinder;
+    @BindView(R.id.tv_edition)
+    TextView mTvEdition;
 
 
     public SetListFragment() {
@@ -75,7 +78,8 @@ public class SetListFragment extends Fragment {
 
     private void initView() {
         mTvIncludeHeaderTitle.setText("设置");
-
+          String versionName = APKVersionCodeUtils.getVerName(getContext());
+          mTvEdition.setText(versionName+"");//表示版本号
     }
 
 
@@ -94,13 +98,13 @@ public class SetListFragment extends Fragment {
             case R.id.tv_phone://手机号绑定与解绑
                 //这一块的逻辑是  如果账号绑定手机号  走解绑界面  否则走绑定界面
                 if (TextUtils.isEmpty(GlobalVariables.getUserPhone())) {//手机号为空
-                    intent=new Intent(getContext(),SetActivity.class);
-                    intent.putExtra(SetActivity.PHONE_STATE,2);
+                    intent = new Intent(getContext(), SetActivity.class);
+                    intent.putExtra(SetActivity.PHONE_STATE, 2);
                     intent.putExtra(Constant.FRAGMENT_ID, BindPasswordFragment.TAG);
                     startActivity(intent);
-                } else {//存在手机好
-                    intent=new Intent(getContext(),SetActivity.class);
-                    intent.putExtra(SetActivity.PHONE_STATE,3);
+                } else {//存在手机号
+                    intent = new Intent(getContext(), SetActivity.class);
+                    intent.putExtra(SetActivity.PHONE_STATE, 3);
                     intent.putExtra(Constant.FRAGMENT_ID, BindPasswordFragment.TAG);
                     startActivity(intent);
                 }

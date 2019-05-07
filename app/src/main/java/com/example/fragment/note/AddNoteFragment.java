@@ -171,7 +171,7 @@ public class AddNoteFragment extends Fragment {
         });
     }
 
-    @OnClick({R.id.li_release, R.id.iv_add})
+    @OnClick({R.id.li_release, R.id.iv_add,R.id.li_includeHeaderLeft})
     protected void onClickView(View view) {
         switch (view.getId()) {
             case R.id.li_release://提交
@@ -209,8 +209,9 @@ public class AddNoteFragment extends Fragment {
                     }
                 }
                 break;
-
-
+            case R.id.li_includeHeaderLeft:
+                getActivity().onBackPressed();
+                break;
             default:
                 break;
         }
@@ -270,7 +271,6 @@ public class AddNoteFragment extends Fragment {
                         mTvState.setVisibility(View.GONE);
                         ToastUtil.showToast(getContext(), ("上传全部文件成功"));
                         mFiles = files;
-
                         mAdapter.setNewData(mFiles);
                     }
                 }
@@ -279,6 +279,8 @@ public class AddNoteFragment extends Fragment {
                 public void onError(int statuscode, String errormsg) {
                     ToastUtil.showToast(getContext(), ("上传文件失败：" + statuscode + errormsg));
                 }
+
+
 
                 @Override
                 public void onProgress(int curIndex, int curPercent, int total, int totalPercent) {
@@ -331,8 +333,9 @@ public class AddNoteFragment extends Fragment {
                             ToastUtil.showToast(getContext(),"添加视频笔记成功");
                         }
                     } else {
-                        ToastUtil.showToast(getContext(), "添加音频记失败" + e.getErrorCode() + e.getMessage());
+                        ToastUtil.showToast(getContext(), "添加笔记失败" + e.getErrorCode() + e.getMessage());
                     }
+                    getActivity().finish();
                 }
             });
         } else {

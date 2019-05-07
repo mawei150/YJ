@@ -98,6 +98,7 @@ public class ShowNoteFragment extends Fragment {
     private void initView() {
         mTvIncludeHeaderTitle.setText("论坛");
         mLiIncludeHeaderRight.setVisibility(View.VISIBLE);
+        mTvIncludeHeaderRight.setVisibility(View.VISIBLE);
         mTvIncludeHeaderRight.setText("发帖");
         mRefresh.setColorSchemeColors(getResources().getColor(R.color.mainColor));
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

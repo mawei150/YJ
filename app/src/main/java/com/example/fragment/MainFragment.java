@@ -35,6 +35,7 @@ import com.example.main.R;
 import com.example.util.Constant;
 import com.example.util.GlobalVariables;
 import com.example.util.ToastUtil;
+import com.example.util.advanced.APKVersionCodeUtils;
 import com.example.util.advanced.BeanEventBus;
 import com.example.util.advanced.CircleImageView;
 import com.squareup.picasso.Picasso;
@@ -60,6 +61,7 @@ import cn.bmob.v3.listener.QueryListener;
 
 public class MainFragment extends Fragment {
 
+    public static final String TAG="MainFragment";
 
     @BindView(R.id.iv_head)
     CircleImageView mIvHead;
@@ -82,7 +84,6 @@ public class MainFragment extends Fragment {
     LinearLayout mLlFeedback;
     @BindView(R.id.ll_setting)
     LinearLayout mLlSetting;
-
 
     private DrawerLayout drawer_layout;
 
@@ -208,6 +209,8 @@ public class MainFragment extends Fragment {
                         mTvNickName.setText("暂无昵称");
                     } else {
                         mTvNickName.setText(GlobalVariables.getUserNickName());
+                        /*String versionName = APKVersionCodeUtils.getVerName(getContext());
+                        mTvNickName.setText(versionName+"");*/
                     }
                     if (userBase.getHeadimage() != null) {
                         /*File mFile = userBase.getImgage();

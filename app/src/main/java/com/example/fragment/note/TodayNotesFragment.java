@@ -126,6 +126,7 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
                 }
                 Intent intent = new Intent();
                 intent.setClass(getContext(), UserCenterActivity.class);//换一种写法
+                intent.putExtra(UserCenterActivity.OPERATION_TYPE,1);//表示查看
                 intent.putExtra(note.class.getCanonicalName(), mNote);
                 intent.putExtra(Constant.FRAGMENT_ID, NoteDetailFragment.TAG);
                 startActivity(intent);
@@ -248,7 +249,17 @@ public class TodayNotesFragment extends Fragment implements BaseQuickAdapter.OnI
 
             @Override
             public void Edit() {
-                ToastUtil.showToast(getContext(), "我是弹出框啊");
+                //ToastUtil.showToast(getContext(), "我是弹出框啊");
+                note mNote = mAdapter.getItem(position);
+                if (mNote == null) {
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.setClass(getContext(), UserCenterActivity.class);//换一种写法
+                intent.putExtra(note.class.getCanonicalName(), mNote);
+                intent.putExtra(UserCenterActivity.OPERATION_TYPE,2);//表示修改
+                intent.putExtra(Constant.FRAGMENT_ID, NoteDetailFragment.TAG);
+                startActivity(intent);
             }
 
             @Override
